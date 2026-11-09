@@ -54,7 +54,7 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Sub,Arial Narrow,60,&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,110,110,{mv},1
+Style: Sub,Arial Narrow,60,&H00FFFFFF,&H00FFFFFF,&H88000000,&H00000000,0,0,0,0,100,100,0,0,1,2.5,0,2,110,110,{mv},1
 Style: HookS,Arial Narrow,58,&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,0,0,1,3,0,8,90,90,230,1
 Style: HookB,Arial Narrow,112,&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,0,0,1,3,0,8,90,90,300,1
 

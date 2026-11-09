@@ -6,10 +6,11 @@ import numpy as np, cv2
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, 'work.mp4')
+SRC = os.environ.get('SRC', os.path.join(HERE, 'work.mp4'))
 FONTS = os.path.join('/home/user/personal', '.claude', 'skills', 'ugc-girl-edit', 'assets', 'fonts')
-OUT = os.path.join(HERE, 'clean_nowhite.mp4')
-W, H, FPS = 1080, 1920, 30
+OUT = os.environ.get('OUT', os.path.join(HERE, 'clean_nowhite.mp4'))
+K = float(os.environ.get('RES_K', '1'))
+W, H, FPS = int(1080 * K), int(1920 * K), int(os.environ.get('FPS', '30'))
 KEEP = [(0.0, 36.0)]
 BG = (246, 242, 236)              # тёплый белый
 ACCENT = '&H4E6EA8&'              # пыльный беж-абрикос #D9A27E (ASS: BGR)
@@ -37,6 +38,9 @@ PRICES = [
     ('card_tone',    6.45, 8.7,  (800, 560), 380),
     ('card_kiko',    30.55, 32.8, (560, 290), 320),
 ]
+
+STICK = [(n, a, b, (int(c[0] * K), int(c[1] * K)), int(sz * K)) for n, a, b, c, sz in STICK]
+PRICES = [(n, a, b, (int(c[0] * K), int(c[1] * K)), int(sz * K)) for n, a, b, c, sz in PRICES]
 
 def ease(x):
     x = min(max(x, 0), 1); return x * x * (3 - 2 * x)
@@ -197,7 +201,7 @@ afilt = parts + ''.join(f'[a{i}]' for i in range(len(KEEP))) + f'concat=n={len(K
 dec = subprocess.Popen(['ffmpeg', '-v', 'error', '-i', SRC, '-vf', f'scale={W}:{H}:flags=lanczos,fps={FPS}', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], stdout=subprocess.PIPE)
 enc = subprocess.Popen(['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
                         '-i', SRC, '-filter_complex', f'[0:v]null[vout];{afilt}',
-                        '-map', '[vout]', '-map', '[aout]', '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p',
+                        '-map', '[vout]', '-map', '[aout]', '-c:v', 'libx264', '-crf', '14', '-preset', 'fast', '-pix_fmt', 'yuv420p',
                         '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', '-shortest', OUT], stdin=subprocess.PIPE)
 fb = W * H * 3
 si = 0

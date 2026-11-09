@@ -18,11 +18,13 @@ def ts(x):
     return f'{int(x // 3600)}:{int(x % 3600 // 60):02d}:{x % 60:05.2f}'
 
 
-SUB_ACC = os.environ.get('SUB_ACCENT', 'bold')   # 'bold' — белый жирный, 'color' — цвет акцента
+SUB_ACC = os.environ.get('SUB_ACCENT', 'none')   # 'bold' — белый жирный, 'color' — цвет акцента
 
 
 def fmt(txt):
-    on, off = ('{\\b1}', '{\\b0}') if SUB_ACC == 'bold' else ('{\\c' + MINT + '}', '{\\c&HFFFFFF&}')
+    if SUB_ACC == 'none': on, off = '', ''
+    elif SUB_ACC == 'bold': on, off = '{\\b1}', '{\\b0}'
+    else: on, off = '{\\c' + MINT + '}', '{\\c&HFFFFFF&}'
     txt = re.sub(r'\*(.+?)\*', lambda m: on + m.group(1) + off, txt)
     for b in BRANDS:
         rep = on + b + off
@@ -58,7 +60,7 @@ Style: HookB,Arial Narrow,112,&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-""".replace('{mv}', str(P.get('sub_margin_v', 480)))
+""".replace('{mv}', str(P.get('sub_margin_v', 400)))
 ev = []
 for b in blocks:
     sp = b['spec']
@@ -74,7 +76,7 @@ for b in blocks:
             if ul and ul['line'] == li:
                 x0, w, uy = ul['x'], ul['w'], y + ul['dy']
                 ta = int((ul['t'] - t0) * 1000); tb = ta + 350
-                ev.append(f"Dialogue: 1,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an7\\pos({x0},{uy})\\bord0\\shad0\\1c{MINT}\\clip({x0},{uy-5},{x0},{uy+12})\\t({ta},{tb},\\clip({x0},{uy-5},{x0+w},{uy+12}))\\p1}}m 0 0 l {w} -3 l {w} 4 l 0 7{{\\p0}}")
+                ev.append(f"Dialogue: 1,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an7\\pos({x0},{uy})\\bord0\\shad0\\1c{MINT}\\clip({x0},{uy-5},{x0},{uy+12})\\t({ta},{tb},\\clip({x0},{uy-5},{x0+w},{uy+12}))\\p1}}m 0 0 l {w} -1 l {w} 2 l 0 3{{\\p0}}")
             y += int(sp.get('gap_big', 96))
         continue
     ev.append(f"Dialogue: 0,{ts(b['st'])},{ts(b['en'])},Sub,,0,0,0,,{{\\blur3}}{fmt(b['txt'])}")

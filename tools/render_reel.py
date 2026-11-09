@@ -19,11 +19,19 @@ WHITE = []
 SCALE = 0.78
 # наклейки: файл, начало, конец, центр (x, y), размер по длинной стороне
 STICK = [
-    ('01_Vichy_Mineral_89',        2.53, 5.6,  (240, 330), 420),
-    ('08_Dior_eyeshadow_palette', 12.5, 15.0, (820, 330), 470),
-    ('02_Clarins',                22.03, 25.6, (800, 360), 560),
-    ('06_MAC_lip_pencil',         26.07, 29.6, (260, 330), 460),
-    ('07_KIKO_lip_gloss',         30.37, 33.4, (840, 330), 420),
+    ('01_Vichy_Mineral_89',        2.6, 5.0,  (240, 320), 330),
+    ('08_Dior_eyeshadow_palette', 12.5, 14.9, (830, 320), 370),
+    ('02_Clarins',                22.1, 24.6, (820, 330), 440),
+    ('06_MAC_lip_pencil',         26.1, 28.6, (250, 320), 370),
+    ('07_KIKO_lip_gloss',         30.4, 32.8, (850, 320), 330),
+]
+
+PDIR = os.path.join(HERE, 'prices')
+# карточки с ценой: файл, начало, конец, центр, ширина
+PRICES = [
+    ('card_vichy',   2.75, 5.0,  (250, 560), 380),
+    ('card_clarins', 22.25, 24.6, (800, 570), 380),
+    ('card_mac',     26.25, 28.6, (250, 520), 190),
 ]
 
 def ease(x):
@@ -65,17 +73,38 @@ def paste_rgba(base, im, cx, cy):
 def draw_sticker(frame, name, t, t0, t1, c):
     if not (t0 <= t <= t1): return
     im = stickers[name]
-    k = back_out(min((t - t0) / 0.35, 1)) if t - t0 < 0.35 else 1.0
-    if t1 - t < 0.2: k *= max((t1 - t) / 0.2, 0)
-    if k <= 0.02: return
-    ang = 6 * math.sin(2 * math.pi * 0.55 * (t - t0))
+    k = 0.9 + 0.1 * ease((t - t0) / 0.3)
+    fade = min(ease((t - t0) / 0.25), ease((t1 - t) / 0.2))
+    if fade <= 0.02: return
+    ang = 3 * math.sin(2 * math.pi * 0.35 * (t - t0))
     im2 = im.resize((max(1, int(im.width * k)), max(1, int(im.height * k))), Image.LANCZOS).rotate(ang, Image.BICUBIC, expand=True)
     # тень
     sh = np.zeros((im2.height + 60, im2.width + 60, 4), np.uint8)
     sh[30:30 + im2.height, 30:30 + im2.width, 3] = (np.asarray(im2)[..., 3] * 0.28).astype(np.uint8)
     sh[..., 3] = cv2.GaussianBlur(sh[..., 3], (0, 0), 12)
+    if fade < 1:
+        im2 = im2.copy(); a = np.asarray(im2).copy(); a[..., 3] = (a[..., 3] * fade).astype(np.uint8); im2 = Image.fromarray(a)
+        sh[..., 3] = (sh[..., 3] * fade).astype(np.uint8)
     paste_rgba(frame, Image.fromarray(sh), c[0] + 8, c[1] + 14)
     paste_rgba(frame, im2, c[0], c[1])
+
+cards = {}
+for name, *_r, wdt in PRICES:
+    im = Image.open(os.path.join(PDIR, name + '.png')).convert('RGBA')
+    cards[name] = im.resize((wdt, int(im.height * wdt / im.width)), Image.LANCZOS)
+
+def draw_price(frame, name, t, t0, t1, c):
+    if not (t0 <= t <= t1): return
+    fade = min(ease((t - t0) / 0.25), ease((t1 - t) / 0.2))
+    if fade <= 0.02: return
+    im = cards[name]; a = np.asarray(im).copy()
+    sh = np.zeros((im.height + 60, im.width + 60, 4), np.uint8)
+    sh[30:30 + im.height, 30:30 + im.width, 3] = (a[..., 3] * 0.22 * fade).astype(np.uint8)
+    sh[..., 3] = cv2.GaussianBlur(sh[..., 3], (0, 0), 10)
+    a[..., 3] = (a[..., 3] * fade).astype(np.uint8)
+    dy = int(12 * (1 - ease((t - t0) / 0.3)))
+    paste_rgba(frame, Image.fromarray(sh), c[0] + 6, c[1] + 10 + dy)
+    paste_rgba(frame, Image.fromarray(a), c[0], c[1] + dy)
 
 # скругление кадра
 def rounded_mask(w, h, r):
@@ -182,6 +211,8 @@ while oi < nout:
     fr = compose(cur, white_p(t))
     for name, t0, t1, c, _ in STICK:
         draw_sticker(fr, name, t, t0, t1, c)
+    for name, t0, t1, c, _ in PRICES:
+        draw_price(fr, name, t, t0, t1, c)
     enc.stdin.write(fr.tobytes()); oi += 1
 enc.stdin.close(); enc.wait(); dec.terminate()
 print('->', OUT)

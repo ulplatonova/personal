@@ -19,23 +19,23 @@ WHITE = []
 SCALE = 0.78
 # наклейки: файл, начало, конец, центр (x, y), размер по длинной стороне
 STICK = [
-    ('01_Vichy_Mineral_89',        2.6, 5.0,  (240, 320), 330),
+    ('01_Vichy_Mineral_89',        2.6, 5.0,  (240, 235), 300),
     ('08_Dior_eyeshadow_palette', 12.5, 14.9, (830, 320), 370),
-    ('02_Clarins',                22.1, 24.6, (820, 330), 440),
+    ('02_Clarins',                22.1, 24.6, (260, 300), 420),
     ('06_MAC_lip_pencil',         26.1, 28.6, (250, 320), 370),
-    ('/home/user/personal/montage/rils2/prices/st_kiko_diag',           30.4, 32.8, (840, 320), 340),
+    ('/home/user/personal/montage/rils2/prices/st_kiko_diag',           30.4, 32.8, (870, 300), 320),
     ('/home/user/personal/montage/rils2/prices/st_tone_diag',           6.3, 8.7,  (830, 320), 360),
 ]
 
 PDIR = os.path.join(HERE, 'prices')
 # карточки с ценой: файл, начало, конец, центр, ширина
 PRICES = [
-    ('card_vichy',   2.75, 5.0,  (250, 560), 380),
-    ('card_clarins', 22.25, 24.6, (800, 570), 380),
+    ('card_vichy',   2.75, 5.0,  (225, 405), 320),
+    ('card_clarins', 22.25, 24.6, (260, 520), 380),
     ('card_mac',     26.25, 28.6, (250, 520), 190),
     ('card_dior',    12.65, 14.9, (810, 545), 260),
     ('card_tone',    6.45, 8.7,  (800, 560), 380),
-    ('card_kiko',    30.55, 32.8, (800, 560), 380),
+    ('card_kiko',    30.55, 32.8, (560, 290), 320),
 ]
 
 def ease(x):

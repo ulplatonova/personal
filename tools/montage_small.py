@@ -86,7 +86,7 @@ def fnt(name, size, var=None):
 #  стиль: шрифт, насыщенность, трекинг, сжатие, цвет, шаг строк, тень
 ST = {'b': ('InterTight.ttf', 500, -0.085, 1.0, WHITE, 0.78, 1),       # основной: плотный гротеск
       'h': ('InterTight.ttf', 500, -0.085, 1.0, ACCENT, 0.78, 1),      # кремовый с подчёркиванием (#слово#)
-      'i': ('PlayfairDisplay-Italic.ttf', 640, -0.07, 0.84, ACCENT, 0.62, 2),  # акцент (*слово*)
+      'i': ('PlayfairDisplay-Italic.ttf', 640, -0.07, 0.84, WHITE, 0.62, 1),  # акцент (*слово*)
       's': ('GreatVibes-Regular.ttf', None, 0.0, 1.0, ACCENT, 0.56, 1),        # росчерк (%слово%)
       'p': ('Arimo.ttf', 700, 0.0, 1.0, WHITE, 1.08, 2)}               # нарочно обычные субтитры, сильная тень
 ANIM = ('i', 'h', 's')
@@ -309,6 +309,7 @@ def layout(b):
     m = b.mode if b.mode in SIZE else 'full'
     _k = float(b.spec.get('size', P.get('text_scale', 1.0)))
     base_s, acc_s, plain_s = [v * _k for v in SIZE[m]]
+    acc_s = base_s * float(P.get('accent_ratio', acc_s / base_s))
     align, x = 'c', W / 2
     top_lane = b.place in ('top', 'top-left', 'top-right')
     if m != 'full': top_lane = False
@@ -446,6 +447,7 @@ for lane in (False, True):
         b.t1 = min(nxt, last + 3.0, END)
         sc_end = [s[0] for s in SCENES if s[0] > b.t0 + 1e-3]
         if sc_end: b.t1 = min(b.t1, sc_end[0])
+        if 'until' in b.spec: b.t1 = min(b.t1, float(b.spec['until']))
 for k, b in enumerate(BLOCKS):                 # в начале смены фона белому тексту мешает переход
     b.min_t = b.t0 + 0.22 if b.t0 > .05 and any(abs(s[0] - b.t0) < 1e-3 and s[2] in ('board', 'sketch') for s in SCENES) else b.t0
 

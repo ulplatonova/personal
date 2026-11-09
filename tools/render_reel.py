@@ -8,14 +8,14 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, 'work.mp4')
 FONTS = os.path.join('/home/user/personal', '.claude', 'skills', 'ugc-girl-edit', 'assets', 'fonts')
-OUT = os.path.join(HERE, 'clean_v3.mp4')
+OUT = os.path.join(HERE, 'clean_nowhite.mp4')
 W, H, FPS = 1080, 1920, 30
 KEEP = [(0.0, 36.0)]
 BG = (246, 242, 236)              # тёплый белый
 ACCENT = '&H4E6EA8&'              # пыльный беж-абрикос #D9A27E (ASS: BGR)
 
 # белый фон: (начало, конец) в секундах готового ролика
-WHITE = [(a, a + 1.0) for a in (2.53, 6.27, 12.5, 22.03, 26.07, 30.37)]
+WHITE = []
 SCALE = 0.78
 # наклейки: файл, начало, конец, центр (x, y), размер по длинной стороне
 STICK = [

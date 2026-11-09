@@ -23,7 +23,8 @@ STICK = [
     ('08_Dior_eyeshadow_palette', 12.5, 14.9, (830, 320), 370),
     ('02_Clarins',                22.1, 24.6, (820, 330), 440),
     ('06_MAC_lip_pencil',         26.1, 28.6, (250, 320), 370),
-    ('07_KIKO_lip_gloss',         30.4, 32.8, (850, 320), 330),
+    ('/home/user/personal/montage/rils2/prices/st_kiko_diag',           30.4, 32.8, (840, 320), 340),
+    ('/home/user/personal/montage/rils2/prices/st_tone_diag',           6.3, 8.7,  (830, 320), 360),
 ]
 
 PDIR = os.path.join(HERE, 'prices')
@@ -32,6 +33,8 @@ PRICES = [
     ('card_vichy',   2.75, 5.0,  (250, 560), 380),
     ('card_clarins', 22.25, 24.6, (800, 570), 380),
     ('card_mac',     26.25, 28.6, (250, 520), 190),
+    ('card_tone',    6.45, 8.7,  (800, 560), 380),
+    ('card_kiko',    30.55, 32.8, (800, 560), 380),
 ]
 
 def ease(x):

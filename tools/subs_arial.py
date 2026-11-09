@@ -8,7 +8,9 @@ import json, re, sys
 plan, words_f, out = sys.argv[1:4]
 P = json.load(open(plan, encoding='utf8'))
 WORDS = [w for ch in json.load(open(words_f, encoding='utf8'))['chunks'] for w in ch['words']]
-MINT = '&HD8F2BF&'          # #BFF2D8 в BGR
+import os
+ACC_HEX = os.environ.get('ACCENT', '#F5C9A6')
+MINT = '&H' + ACC_HEX[5:7] + ACC_HEX[3:5] + ACC_HEX[1:3] + '&'   # акцент, BGR
 BRANDS = ['Vichy', 'Clarins', 'SPF', 'Dior', 'MAC', 'Kiko']
 
 
@@ -16,10 +18,14 @@ def ts(x):
     return f'{int(x // 3600)}:{int(x % 3600 // 60):02d}:{x % 60:05.2f}'
 
 
+SUB_ACC = os.environ.get('SUB_ACCENT', 'bold')   # 'bold' — белый жирный, 'color' — цвет акцента
+
+
 def fmt(txt):
-    txt = re.sub(r'\*(.+?)\*', lambda m: '{\\c' + MINT + '}' + m.group(1) + '{\\c&HFFFFFF&}', txt)
+    on, off = ('{\\b1}', '{\\b0}') if SUB_ACC == 'bold' else ('{\\c' + MINT + '}', '{\\c&HFFFFFF&}')
+    txt = re.sub(r'\*(.+?)\*', lambda m: on + m.group(1) + off, txt)
     for b in BRANDS:
-        rep = '{\\c' + MINT + '}' + b + '{\\c&HFFFFFF&}'
+        rep = on + b + off
         txt = re.sub(rf'\b{b}\b', lambda m, r=rep: r, txt)
     return txt
 
@@ -46,21 +52,31 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Sub,Arial Narrow,60,&H00FFFFFF,&H00FFFFFF,&H90000000,&H00000000,0,0,0,0,100,100,0,0,1,3,0,2,110,110,{mv},1
-Style: HookS,Arial Narrow,58,&H00FFFFFF,&H00FFFFFF,&H90000000,&H00000000,0,0,0,0,100,100,0,0,1,3,0,8,90,90,230,1
-Style: HookB,Arial Narrow,112,&H00D8F2BF,&H00FFFFFF,&H90000000,&H00000000,0,0,0,0,100,100,0,0,1,3,0,8,90,90,300,1
+Style: Sub,Arial Narrow,60,&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,110,110,{mv},1
+Style: HookS,Arial Narrow,58,&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,0,0,1,3,0,8,90,90,230,1
+Style: HookB,Arial Narrow,112,&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,0,0,1,3,0,8,90,90,300,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-""".replace('{mv}', str(P.get('sub_margin_v', 640)))
+""".replace('{mv}', str(P.get('sub_margin_v', 480)))
 ev = []
 for b in blocks:
     sp = b['spec']
     if sp.get('hook'):
-        small, big = sp['hook']; until = float(sp.get('until', b['en']))
-        ev.append(f"Dialogue: 0,{ts(max(0, b['st'] - 0.05))},{ts(until)},HookS,,0,0,0,,{{\\blur4}}{small}")
-        ev.append(f"Dialogue: 0,{ts(max(0, b['st'] - 0.05))},{ts(until)},HookB,,0,0,0,,{{\\blur4}}{big}")
+        # хук: строки вручную, с плотным межстрочным интервалом; подчёркивание слова анимацией
+        until = float(sp.get('until', b['en'])); t0 = max(0, b['st'] - 0.05)
+        y = int(sp.get('hook_y', 220)); col = '{\\c' + MINT + '}'
+        ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookS,,0,0,0,,{{\\an8\\pos(540,{y})\\blur3}}{sp['hook'][0]}")
+        y += int(sp.get('gap_small', 66))
+        for li, line in enumerate(sp['hook'][1:]):
+            ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an8\\pos(540,{y})\\blur3}}{col}{line}")
+            ul = sp.get('underline')
+            if ul and ul['line'] == li:
+                x0, w, uy = ul['x'], ul['w'], y + ul['dy']
+                ta = int((ul['t'] - t0) * 1000); tb = ta + 350
+                ev.append(f"Dialogue: 1,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an7\\pos({x0},{uy})\\bord0\\shad0\\1c{MINT}\\clip({x0},{uy-5},{x0},{uy+12})\\t({ta},{tb},\\clip({x0},{uy-5},{x0+w},{uy+12}))\\p1}}m 0 0 l {w} -3 l {w} 4 l 0 7{{\\p0}}")
+            y += int(sp.get('gap_big', 96))
         continue
-    ev.append(f"Dialogue: 0,{ts(b['st'])},{ts(b['en'])},Sub,,0,0,0,,{{\\blur4}}{fmt(b['txt'])}")
+    ev.append(f"Dialogue: 0,{ts(b['st'])},{ts(b['en'])},Sub,,0,0,0,,{{\\blur3}}{fmt(b['txt'])}")
 open(out, 'w', encoding='utf8').write(head + '\n'.join(ev) + '\n')
 print('блоков:', len(ev), '->', out)

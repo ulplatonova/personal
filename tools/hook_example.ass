@@ -1,0 +1,14 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Hook,Inter Tight,70,&H00FFFFFF,&H00FFFFFF,&H00000000,&H50000000,0,0,0,0,100,100,-2,0,1,0,2,8,80,80,190,1
+Style: HookA,Playfair Display,84,&H00FFFFFF,&H00FFFFFF,&H00000000,&H50000000,0,1,0,0,100,100,0,0,1,0,2,8,80,80,272,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.05,0:00:02.53,Hook,,0,0,0,,{\fad(120,0)}косметика которая
+Dialogue: 0,0:00:00.95,0:00:02.53,HookA,,0,0,0,,{\fad(200,0)}реально стоит своих денег

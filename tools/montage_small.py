@@ -378,6 +378,7 @@ def layout(b):
         ys, xs = np.nonzero(a > 128)
         if not len(xs): continue
         x0, x1, y0_, y1 = xx + xs.min(), xx + xs.max(), yy + ys.min(), yy + ys.max()
+        if b.spec.get('hide'): break
         if x0 < SAFE[0] or x1 > SAFE[2] or y0_ < SAFE[1] or y1 > SAFE[3]:
             errors.append(f'блок {b.i} «{b.spec["text"]}»: текст у края экрана')
         if not b.top_lane and y0_ < chin - 8:

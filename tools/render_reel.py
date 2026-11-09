@@ -6,27 +6,24 @@ import numpy as np, cv2
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, '..', 'makeup.mp4')
-FONTS = os.path.join(HERE, '..', '..', '.claude', 'skills', 'ugc-girl-edit', 'assets', 'fonts')
+SRC = os.path.join(HERE, 'work.mp4')
+FONTS = os.path.join('/home/user/personal', '.claude', 'skills', 'ugc-girl-edit', 'assets', 'fonts')
 OUT = os.path.join(HERE, 'clean_v3.mp4')
 W, H, FPS = 1080, 1920, 30
-KEEP = [(0.0, 44.22), (44.6, 48.41)]
+KEEP = [(0.0, 36.0)]
 BG = (246, 242, 236)              # тёплый белый
 ACCENT = '&H4E6EA8&'              # пыльный беж-абрикос #D9A27E (ASS: BGR)
 
 # белый фон: (начало, конец) в секундах готового ролика
-WHITE = [(2.4, 3.4), (13.0, 14.0), (15.9, 16.9), (22.1, 23.1), (35.4, 36.4), (39.7, 40.7), (41.9, 42.9)]
+WHITE = [(a, a + 1.0) for a in (2.53, 6.27, 12.5, 22.03, 26.07, 30.37)]
 SCALE = 0.78
 # наклейки: файл, начало, конец, центр (x, y), размер по длинной стороне
 STICK = [
-    ('01_Vichy_Mineral_89',               2.4, 4.4,  (190, 980), 400),
-    ('04_Influence_Universum_nude_stick', 13.0, 15.8, (250, 330), 440),
-    ('05_Influence_Universum_pink_stick', 15.9, 17.4, (850, 330), 400),
-    ('03_Pusy_brow_gel',                  20.9, 22.0, (900, 1150), 380),
-    ('08_Dior_eyeshadow_palette',         22.1, 24.6, (820, 330), 470),
-    ('02_Clarins',                        35.4, 38.9, (800, 360), 560),
-    ('06_MAC_lip_pencil',                 39.7, 41.8, (260, 330), 460),
-    ('07_KIKO_lip_gloss',                 41.9, 44.2, (840, 330), 420),
+    ('01_Vichy_Mineral_89',        2.53, 5.6,  (190, 980), 400),
+    ('08_Dior_eyeshadow_palette', 12.5, 15.0, (820, 330), 470),
+    ('02_Clarins',                22.03, 25.6, (800, 360), 560),
+    ('06_MAC_lip_pencil',         26.07, 29.6, (260, 330), 460),
+    ('07_KIKO_lip_gloss',         30.37, 33.4, (840, 330), 420),
 ]
 
 def ease(x):
@@ -47,7 +44,7 @@ TOTAL = sum(b - a for a, b in KEEP)
 # --- наклейки
 stickers = {}
 for name, *_r, size in STICK:
-    im = Image.open(os.path.join(HERE, 'new_png', 'Косметика_PNG_с_обводкой', f'{name}.png')).convert('RGBA')
+    im = Image.open(os.path.join('/home/user/personal/montage/makeup_монтаж/new_png/Косметика_PNG_с_обводкой', f'{name}.png')).convert('RGBA')
     k = size / max(im.size); im = im.resize((int(im.width * k), int(im.height * k)), Image.LANCZOS)
     stickers[name] = im
 

@@ -8,22 +8,25 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, '..', 'makeup.mp4')
 FONTS = os.path.join(HERE, '..', '..', '.claude', 'skills', 'ugc-girl-edit', 'assets', 'fonts')
-OUT = os.path.join(HERE, '..', 'макияж_v2.mp4')
+OUT = os.path.join(HERE, 'clean_v3.mp4')
 W, H, FPS = 1080, 1920, 30
 KEEP = [(0.0, 44.22), (44.6, 48.41)]
 BG = (246, 242, 236)              # тёплый белый
 ACCENT = '&H4E6EA8&'              # пыльный беж-абрикос #D9A27E (ASS: BGR)
 
 # белый фон: (начало, конец) в секундах готового ролика
-WHITE = [(2.0, 6.3), (12.9, 17.4), (35.3, 38.9)]
+WHITE = [(2.0, 6.3), (12.9, 17.4), (22.0, 24.6), (35.3, 38.9), (39.6, 44.2)]
 SCALE = 0.78
 # наклейки: файл, начало, конец, центр (x, y), размер по длинной стороне
 STICK = [
-    ('cream',   2.3, 4.2,  (850, 330), 380),
-    ('sculpt', 13.0, 15.8, (230, 330), 400),
-    ('blush',  15.9, 17.4, (860, 330), 380),
-    ('brow',   20.9, 22.4, (900, 1180), 360),
-    ('mascara', 35.4, 38.9, (800, 330), 430),
+    ('01_Vichy_Mineral_89',               2.4, 4.4,  (190, 980), 400),
+    ('04_Influence_Universum_nude_stick', 13.0, 15.8, (250, 330), 440),
+    ('05_Influence_Universum_pink_stick', 15.9, 17.4, (850, 330), 400),
+    ('03_Pusy_brow_gel',                  20.9, 22.0, (900, 1150), 380),
+    ('08_Dior_eyeshadow_palette',         22.1, 24.6, (820, 330), 470),
+    ('02_Clarins',                        35.4, 38.9, (800, 360), 560),
+    ('06_MAC_lip_pencil',                 39.7, 41.8, (260, 330), 460),
+    ('07_KIKO_lip_gloss',                 41.9, 44.2, (840, 330), 420),
 ]
 
 def ease(x):
@@ -47,7 +50,7 @@ TOTAL = sum(b - a for a, b in KEEP)
 # --- наклейки
 stickers = {}
 for name, *_r, size in STICK:
-    im = Image.open(os.path.join(HERE, 'stickers', f'st_{name}.png')).convert('RGBA')
+    im = Image.open(os.path.join(HERE, 'new_png', 'Косметика_PNG_с_обводкой', f'{name}.png')).convert('RGBA')
     k = size / max(im.size); im = im.resize((int(im.width * k), int(im.height * k)), Image.LANCZOS)
     stickers[name] = im
 
@@ -95,8 +98,8 @@ def compose(src, p):
     out = np.empty_like(src); out[:] = BG
     bg_mix = (src.astype(np.float32) * (1 - p) + out.astype(np.float32) * p).astype(np.uint8) if p < 1 else out
     x0, y0 = (W - w) // 2, (H - h) // 2
-    r = int(44 * p) + 1
-    m = rounded_mask(w, h, r).astype(np.float32) / 255
+    r = 1
+    m = np.ones((h, w), np.float32)
     # тень под кадром
     shadow = np.zeros((H + 40, W), np.float32); shadow[y0 + 18:y0 + 18 + h, x0:x0 + w] = m; shadow = shadow[:H]
     shadow = cv2.GaussianBlur(shadow, (0, 0), 28) * 0.22 * p
@@ -166,7 +169,7 @@ afilt = parts + ''.join(f'[a{i}]' for i in range(len(KEEP))) + f'concat=n={len(K
 
 dec = subprocess.Popen(['ffmpeg', '-v', 'error', '-i', SRC, '-vf', f'scale={W}:{H}:flags=lanczos,fps={FPS}', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], stdout=subprocess.PIPE)
 enc = subprocess.Popen(['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
-                        '-i', SRC, '-filter_complex', f'[0:v]ass={ass_path}:fontsdir={FONTS}[vout];{afilt}',
+                        '-i', SRC, '-filter_complex', f'[0:v]null[vout];{afilt}',
                         '-map', '[vout]', '-map', '[aout]', '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p',
                         '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', '-shortest', OUT], stdin=subprocess.PIPE)
 fb = W * H * 3

@@ -70,3 +70,6 @@
 - Команда: `FONT=InterTightUGC SUB_SIZE=66 HOOKS_SIZE=60 HOOKB_SIZE=118 FSP_SUB=-3 FSP_HOOKS=-3 FSP_HOOK=-6 WORD_GAP=3 OUTLINE_HOOK=0 OUTLINE_SUB=0 SOFT_SHADOW=A0 python3 tools/subs_arial.py plan.json words.json out.ass`, затем `ass=out.ass:fontsdir=tools/fonts_inter_ugc`.
 - Хук: межстрочный между крупными (цветными) строками плотный — `gap_big=82`, между мелкой и крупной `gap_small=56`.
 - Подчёркивание «реально» (Regular, fsp −6): x=300, w=278, dy=103; начинает прорисовываться **раньше**, чем звучит слово (t=0.55 с), и рисуется дольше (`dur` 0.7 с).
+
+## Скилл «бело-розовые субтитры»
+Все правила утверждённого стиля собраны в скилле `.claude/skills/belo-rozovye-subtitry/` (SKILL.md + скрипты, шрифт, примеры). Если Ульяна просит «бело-розовые субтитры» — работать строго по нему.

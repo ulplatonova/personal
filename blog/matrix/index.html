@@ -47,6 +47,7 @@ h2{font-family:var(--display);font-size:16px;line-height:1.25;letter-spacing:-.0
 .tag.q{background:var(--warn-soft);color:var(--warn)}
 .tag.new{background:var(--new-soft);color:var(--new)}
 .tag.p{background:var(--accent);color:var(--on-accent)}
+.emo{font-size:15px;letter-spacing:0;text-transform:none}
 .empty{color:var(--muted);font-style:normal}
 details.panel summary{cursor:pointer;font-weight:600;list-style:none}
 details.panel summary::-webkit-details-marker{display:none}
@@ -87,7 +88,7 @@ details[open].panel summary::after{content:"–"}
 
 <script>
 const FORMATS=[
-  {k:'list',n:'Подборка'},{k:'how',n:'Польза'},{k:'vibe',n:'Атмосфера'},{k:'case',n:'Кейсы'},{k:'own',n:'Личное'}
+  {k:'list',n:'Подборка',e:'📝'},{k:'how',n:'Польза',e:'💡'},{k:'vibe',n:'Атмосфера',e:'🎬'},{k:'case',n:'Кейсы',e:'⭐'},{k:'own',n:'Личное',e:'❤️'}
 ];
 const CHANGES=[
   'Журналы заменены на постеры и необычные картины.',
@@ -150,7 +151,7 @@ function render(){
   document.getElementById('themes').innerHTML=THEMES.map(th=>{
     const rows=FORMATS.filter(f=>active==='all'||active===f.k).map(f=>{
       const items=th[f.k]||[];
-      return '<div class="fmt"><div class="fmt-name">'+f.n+'</div><ul class="ideas">'+
+      return '<div class="fmt"><div class="fmt-name"><span class="emo">'+f.e+'</span> '+f.n+'</div><ul class="ideas">'+
         (items.length?items.map(i=>'<li class="idea">'+br(i.t)+tags(i.f)+'</li>').join(''):'<li class="empty">Пока пусто</li>')+'</ul></div>';
     }).join('');
     return '<section class="theme"><div class="theme-head"><h2>'+esc(th.name)+'</h2>'+(th.facts?'<p class="facts">'+esc(th.facts)+'</p>':'')+'</div>'+rows+'</section>';
@@ -158,7 +159,7 @@ function render(){
   document.querySelectorAll('#filters .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===active));
 }
 document.getElementById('changes').innerHTML=CHANGES.map(c=>'<li>'+esc(c)+'</li>').join('');
-document.getElementById('filters').innerHTML=[{k:'all',n:'Все форматы'}].concat(FORMATS).map(f=>'<button class="chip" type="button" data-k="'+f.k+'" aria-pressed="false">'+f.n+'</button>').join('');
+document.getElementById('filters').innerHTML=[{k:'all',n:'Все форматы'}].concat(FORMATS).map(f=>'<button class="chip" type="button" data-k="'+f.k+'" aria-pressed="false">'+(f.e?f.e+' ':'')+f.n+'</button>').join('');
 document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b){active=b.dataset.k;render();}});
 document.getElementById('prefs').innerHTML='<div><h4>Нравится</h4><ul>'+LIKE.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div><h4>Не нравится</h4><ul>'+DISLIKE.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
 render();

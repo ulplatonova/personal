@@ -54,13 +54,13 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Sub,Arial Narrow,60,&H00FFFFFF,&H00FFFFFF,&H88000000,&H00000000,0,0,0,0,100,100,0,0,1,2.5,0,2,110,110,{mv},1
-Style: HookS,Arial Narrow,58,&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,0,0,1,3,0,8,90,90,230,1
-Style: HookB,Arial Narrow,112,&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,0,0,1,3,0,8,90,90,300,1
+Style: Sub,{font},{ss},&H00FFFFFF,&H00FFFFFF,&H88000000,&H00000000,0,0,0,0,100,100,{sp},0,1,2.5,0,2,110,110,{mv},1
+Style: HookS,{font},{hs},&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,{sph},0,1,3,0,8,90,90,230,1
+Style: HookB,{font},{hb},&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,{sph},0,1,3,0,8,90,90,300,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-""".replace('{mv}', str(P.get('sub_margin_v', 400)))
+""".replace('{mv}', str(P.get('sub_margin_v', 400))).replace('{font}', os.environ.get('FONT', 'Arial Narrow')).replace('{ss}', os.environ.get('SUB_SIZE', '60')).replace('{hs}', os.environ.get('HOOKS_SIZE', '58')).replace('{hb}', os.environ.get('HOOKB_SIZE', '112')).replace('{sp}', os.environ.get('SPACING_SUB', '0')).replace('{sph}', os.environ.get('SPACING_HOOK', '0'))
 ev = []
 for b in blocks:
     sp = b['spec']

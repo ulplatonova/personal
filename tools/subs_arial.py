@@ -64,6 +64,13 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 WT = os.environ.get('WEIGHT', '')
 WTAG = ('\\b' + WT) if WT else ''
 FSP = lambda k: ('\\fsp' + os.environ[k]) if os.environ.get(k) else ''
+WORD_GAP = os.environ.get('WORD_GAP', '')   # доп. ширина пробела при плотном трекинге, px
+
+
+def gaps(txt, k):
+    # плотный трекинг сжимает и пробелы; возвращаем словам воздух
+    if not (WORD_GAP and os.environ.get(k)): return txt
+    return txt.replace(' ', '{\\fsp' + WORD_GAP + '} {\\fsp' + os.environ[k] + '}')
 HBL = '0' if os.environ.get('OUTLINE_HOOK', '3') == '0' else '3'
 SOFT = os.environ.get('SOFT_SHADOW', '')   # альфа мягкой тени у субтитров (отдельный слой), напр. '90'
 ev = []
@@ -73,10 +80,10 @@ for b in blocks:
         # хук: строки вручную, с плотным межстрочным интервалом; подчёркивание слова анимацией
         until = float(sp.get('until', b['en'])); t0 = max(0, b['st'] - 0.05)
         y = int(sp.get('hook_y', 220)); col = '{\\c' + MINT + '}'
-        ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookS,,0,0,0,,{{\\an8\\pos(540,{y})\\blur{HBL}{WTAG}{FSP('FSP_HOOKS')}}}{sp['hook'][0]}")
+        ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookS,,0,0,0,,{{\\an8\\pos(540,{y})\\blur{HBL}{WTAG}{FSP('FSP_HOOKS')}}}{gaps(sp['hook'][0], 'FSP_HOOKS')}")
         y += int(sp.get('gap_small', 66))
         for li, line in enumerate(sp['hook'][1:]):
-            ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an8\\pos(540,{y})\\blur{HBL}{WTAG}{FSP('FSP_HOOK')}}}{col}{line}")
+            ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an8\\pos(540,{y})\\blur{HBL}{WTAG}{FSP('FSP_HOOK')}}}{col}{gaps(line, 'FSP_HOOK')}")
             ul = sp.get('underline')
             if ul and ul['line'] == li:
                 x0, w, uy = ul['x'], ul['w'], y + ul['dy']
@@ -86,7 +93,7 @@ for b in blocks:
         continue
     if SOFT:
         mv = int(P.get('sub_margin_v', 400)) - 3
-        ev.append(f"Dialogue: 0,{ts(b['st'])},{ts(b['en'])},Sub,,112,108,{mv},,{{\\1c&H000000&\\1a&H{SOFT}&\\bord0\\shad0\\blur7{WTAG}{FSP('FSP_SUB')}}}{b['txt']}")
-    ev.append(f"Dialogue: 1,{ts(b['st'])},{ts(b['en'])},Sub,,0,0,0,,{{\\blur{'0' if SOFT else '3'}{WTAG}{FSP('FSP_SUB')}}}{fmt(b['txt'])}")
+        ev.append(f"Dialogue: 0,{ts(b['st'])},{ts(b['en'])},Sub,,112,108,{mv},,{{\\1c&H000000&\\1a&H{SOFT}&\\bord0\\shad0\\blur7{WTAG}{FSP('FSP_SUB')}}}{gaps(b['txt'], 'FSP_SUB')}")
+    ev.append(f"Dialogue: 1,{ts(b['st'])},{ts(b['en'])},Sub,,0,0,0,,{{\\blur{'0' if SOFT else '3'}{WTAG}{FSP('FSP_SUB')}}}{gaps(fmt(b['txt']), 'FSP_SUB')}")
 open(out, 'w', encoding='utf8').write(head + '\n'.join(ev) + '\n')
 print('блоков:', len(ev), '->', out)

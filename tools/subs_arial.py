@@ -87,7 +87,7 @@ for b in blocks:
             ul = sp.get('underline')
             if ul and ul['line'] == li:
                 x0, w, uy = ul['x'], ul['w'], y + ul['dy']
-                ta = int((ul['t'] - t0) * 1000); tb = ta + 350
+                ta = int((ul['t'] - t0) * 1000); tb = ta + int(ul.get('dur', 0.35) * 1000)
                 ev.append(f"Dialogue: 1,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an7\\pos({x0},{uy})\\bord0\\shad0\\1c{MINT}\\clip({x0},{uy-5},{x0},{uy+12})\\t({ta},{tb},\\clip({x0},{uy-5},{x0+w},{uy+12}))\\p1}}m 0 0 l {w} -1 l {w} 2 l 0 3{{\\p0}}")
             y += int(sp.get('gap_big', 96))
         continue

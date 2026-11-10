@@ -1,0 +1,163 @@
+<title>Матрица контента Ульяны</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: узкая правая панель. Сверху правки и фильтр по форматам, ниже темы вертикально, внутри темы пять форматов списком. */
+:root{
+  --bg:#F5EFE6; --surface:#FBF8F3; --ink:#3A2A22; --muted:#7D6A5E; --line:#E4D8CA;
+  --accent:#8A5A44; --accent-soft:#EBDCCB; --warn:#B0702F; --warn-soft:#F3E2C6;
+  --new:#4F6B4A; --new-soft:#DDE8D6; --bracket:#A8553F;
+  --font:"Inter Tight","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1F1814; --surface:#2A211B; --ink:#F0E6DA; --muted:#B5A396; --line:#43362C;
+  --accent:#D9A48A; --accent-soft:#3D2E25; --warn:#E0A862; --warn-soft:#4A3921;
+  --new:#A5C79D; --new-soft:#2C3A29; --bracket:#E59A82; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1F1814; --surface:#2A211B; --ink:#F0E6DA; --muted:#B5A396; --line:#43362C;
+  --accent:#D9A48A; --accent-soft:#3D2E25; --warn:#E0A862; --warn-soft:#4A3921;
+  --new:#A5C79D; --new-soft:#2C3A29; --bracket:#E59A82; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;
+  padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-size:26px;line-height:1.1;letter-spacing:-.02em;font-weight:600;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;font-size:14px}
+h2{font-size:19px;letter-spacing:-.015em;font-weight:600;margin:0;text-wrap:balance}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.panel h3{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.changes{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none;font-size:14px}
+.changes li{padding-left:14px;position:relative}
+.changes li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--new)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:13px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.chip:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.theme{display:flex;flex-direction:column;gap:12px;padding-top:4px}
+.theme-head{display:flex;flex-direction:column;gap:4px;border-top:2px solid var(--ink);padding-top:12px}
+.facts{color:var(--muted);font-size:13.5px;margin:0}
+.fmt{display:grid;grid-template-columns:minmax(0,92px) minmax(0,1fr);gap:4px 14px;padding:10px 0;border-top:1px solid var(--line)}
+.fmt-name{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:2px}
+.ideas{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;min-width:0}
+.idea{min-width:0;overflow-wrap:anywhere}
+.br{color:var(--bracket);background:var(--accent-soft);border-radius:4px;padding:0 4px}
+.tag{display:inline-block;font-size:11px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.tag.q{background:var(--warn-soft);color:var(--warn)}
+.tag.new{background:var(--new-soft);color:var(--new)}
+.tag.p{background:var(--accent);color:var(--bg)}
+.empty{color:var(--muted);font-style:normal}
+details.panel summary{cursor:pointer;font-weight:600;list-style:none}
+details.panel summary::-webkit-details-marker{display:none}
+details.panel summary::after{content:"+";float:right;color:var(--muted)}
+details[open].panel summary::after{content:"–"}
+.pref{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:12px}
+.pref ul{margin:0;padding-left:18px;font-size:14px;display:flex;flex-direction:column;gap:4px}
+.pref h4{margin:0 0 6px;font-size:13px}
+.foot{color:var(--muted);font-size:13px}
+@media (max-width:420px){.fmt{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.chip{transition:background .15s,border-color .15s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Матрица контента</h1>
+    <p class="sub">6 тем × 5 форматов. Правки скажите мне в чате, я обновлю страницу и запомню.</p>
+  </header>
+
+  <section class="panel" aria-labelledby="chg">
+    <h3 id="chg">Что изменено · 10 ноября</h3>
+    <ul class="changes" id="changes"></ul>
+  </section>
+
+  <section aria-label="Фильтр по формату">
+    <div class="chips" id="filters"></div>
+  </section>
+
+  <div id="themes" class="wrap" style="gap:28px"></div>
+
+  <details class="panel">
+    <summary>Что вам нравится и не нравится</summary>
+    <div class="pref" id="prefs"></div>
+  </details>
+
+  <p class="foot">Отмеченное <span class="br">[в скобках]</span> заполняете вы: это реальные факты. Не трогаем: партнёра и отношения, квартиру целиком.</p>
+</div>
+
+<script>
+const FORMATS=[
+  {k:'list',n:'Подборка'},{k:'how',n:'Польза'},{k:'vibe',n:'Атмосфера'},{k:'case',n:'Кейсы'},{k:'own',n:'Личное'}
+];
+const CHANGES=[
+  'Журналы заменены на постеры и необычные картины.',
+  'Добавлены ковры, гирлянды и лампы с тёплым или оранжевым светом необычной формы.',
+  'Убрано «Иду за кофе за [цена] и новым журналом».',
+  'Вечер с готовкой в атмосфере вдохновения оставлен под вопросом: ждём вашего решения.'
+];
+// flag: 'q' под вопросом, 'new' изменено, число 1-3 приоритет
+const THEMES=[
+ {name:'Что меня вдохновляет',
+  facts:'Постеры и необычные картины, ковры, гирлянды и тёплые лампы необычной формы, открытки, винтажная посуда и винтаж, асимметричные вазы, чистота дома, готовка по настроению, блокноты с рабочими заметками, туфли и ботильоны, кофе.',
+  list:[{t:'Рандомные вещи, которые меня вдохновляют (постеры и картины, ковры, гирлянды и тёплые лампы, открытки, винтажная посуда, ботильоны): начало серии, каждая вещь отдельным роликом',f:[1,'new']}],
+  how:[{t:'Где я ищу винтажную посуду и не переплачиваю [места]'},{t:'Как я веду блокнот с рабочими заметками и идеями'}],
+  vibe:[{t:'Вечер, когда есть настроение готовить',f:['q']}],
+  case:[{t:'Блокнот за 300 ₽ и за 3000 ₽: есть ли разница',f:[3]},{t:'Купила [лампу / ковёр / постер]: как изменился угол комнаты',f:['new']}],
+  own:[{t:'Почему чистота вдохновляет меня больше, чем шопинг'},{t:'Плачу за кофе как зумер и не жалею'}]},
+ {name:'Красивые вещи, которые стоят своих денег',
+  list:[{t:'Косметика, которая стоит своих денег, ч. 2'},{t:'Подарки к НГ, которые стоят своих денег'}],
+  how:[{t:'Как я понимаю, что вещь стоит своих денег, ещё в магазине'}],
+  vibe:[{t:'Утро и моя полка: чем пользуюсь каждый день'}],
+  case:[{t:'Дорогое vs бюджетное: [средство]'},{t:'Закончилось за месяц: что куплю снова'}],
+  own:[{t:'Почему я больше не покупаю косметику пачками'}]},
+ {name:'Осознанный шопинг и гардероб',
+  facts:'Раньше закупалась дешёвыми вещами на ВБ, теперь старается не покупать, продаёт на Авито, выбирает универсальное. Очень любит обувь, много ботильонов, носит редко.',
+  list:[{t:'Универсальные вещи, которые пережили чистку шкафа'},{t:'Мои ботильоны, которые я почти не ношу'}],
+  how:[{t:'Как я продаю вещи на Авито глазами маркетолога',f:[2]},{t:'5 образов из [N] вещей'}],
+  vibe:[{t:'Разбираю шкаф: что уходит на Авито'}],
+  case:[{t:'Раньше закупалась на ВБ пачками: что изменилось'},{t:'Сколько заработала на старых вещах [цифра]'}],
+  own:[{t:'Почему каблуки меня будоражат, даже если я их не ношу'}]},
+ {name:'Дом в деталях (макро)',
+  facts:'Квартира маленькая, показываем только детали.',
+  list:[{t:'Необычные вещи для интерьера: дофаминовые лампы, асимметричные вазы'},{t:'Детали, из-за которых маленькая квартира уютнее'}],
+  how:[{t:'Как сделать маленькую квартиру красивой в кадре'},{t:'Уборка за 15 минут, после которой дома как в отеле'}],
+  vibe:[{t:'Воскресная уборка: моя медитация'},{t:'Готовлю, когда есть настроение'}],
+  case:[{t:'Переставила [3 вещи]: до/после'}],
+  own:[{t:'Мне не нужна большая квартира, чтобы было красиво'}]},
+ {name:'Коди',
+  facts:'Мультипу, мальчик, 7 месяцев. Буйный, смешной, ходит на задних лапах.',
+  list:[{t:'Вещи для щенка, которые реально пригодились'}],
+  how:[{t:'Первые 7 месяцев с мультипу: что бы я сказала себе до покупки'}],
+  vibe:[{t:'Обычный день с буйным щенком'},{t:'Коди опять ходит на задних лапах'}],
+  case:[{t:'Как изменилась моя жизнь после Коди'}],
+  own:[{t:'Почему я решилась завести собаку [причина]'}]},
+ {name:'Голова маркетолога',
+  facts:'Работает маркетологом в Cleanhub. Показывать можно почти всё, лучше обезличенно. Упоминания компании уточнить у работодателя.',
+  list:[{t:'Бьюти-рекламы, которые меня как маркетолога зацепили'}],
+  how:[{t:'Как я придумываю идеи: мой блокнот'},{t:'Как я разбираю чужой рилс за 5 минут'}],
+  vibe:[{t:'Мой рабочий день маркетолога'}],
+  case:[{t:'Проект, которым горжусь [Cleanhub / обезличенно]'},{t:'Мой провал на работе и вывод'}],
+  own:[{t:'Как маркетинг испортил мне шопинг, и почему это хорошо'}]}
+];
+const LIKE=['Живой голос и мелкие шутки посреди пользы','Естественный дневной свет, «как в реальности»','Реальные цены, бренды и один честный минус','Постеры, необычные картины, ковры, гирлянды, тёплые лампы','Винтаж и красивая посуда','Распаковки одежды и обуви'];
+const DISLIKE=['Формулы «5 вещей…» и «я маркетолог, и вот…»','Колхозное оформление, наигранность, нечёткая картинка','Журналы как источник вдохновения','Атмосферные ролики вроде «иду за кофе и журналом»','Привязка блога к местам и ресторанам','Мятный, бирюзовый и розовый акценты в монтаже'];
+
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const br=s=>esc(s).replace(/\[([^\]]+)\]/g,'<span class="br">[$1]</span>');
+const tags=f=>(f||[]).map(x=>x==='q'?'<span class="tag q">под вопросом</span>':x==='new'?'<span class="tag new">обновлено</span>':'<span class="tag p">приоритет '+x+'</span>').join('');
+let active='all';
+function render(){
+  document.getElementById('themes').innerHTML=THEMES.map(th=>{
+    const rows=FORMATS.filter(f=>active==='all'||active===f.k).map(f=>{
+      const items=th[f.k]||[];
+      return '<div class="fmt"><div class="fmt-name">'+f.n+'</div><ul class="ideas">'+
+        (items.length?items.map(i=>'<li class="idea">'+br(i.t)+tags(i.f)+'</li>').join(''):'<li class="empty">Пока пусто</li>')+'</ul></div>';
+    }).join('');
+    return '<section class="theme"><div class="theme-head"><h2>'+esc(th.name)+'</h2>'+(th.facts?'<p class="facts">'+esc(th.facts)+'</p>':'')+'</div>'+rows+'</section>';
+  }).join('');
+  document.querySelectorAll('#filters .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===active));
+}
+document.getElementById('changes').innerHTML=CHANGES.map(c=>'<li>'+esc(c)+'</li>').join('');
+document.getElementById('filters').innerHTML=[{k:'all',n:'Все форматы'}].concat(FORMATS).map(f=>'<button class="chip" type="button" data-k="'+f.k+'" aria-pressed="false">'+f.n+'</button>').join('');
+document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b){active=b.dataset.k;render();}});
+document.getElementById('prefs').innerHTML='<div><h4>Нравится</h4><ul>'+LIKE.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div><h4>Не нравится</h4><ul>'+DISLIKE.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+render();
+</script>

@@ -54,13 +54,18 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Sub,{font},{ss},&H00FFFFFF,&H00FFFFFF,&H88000000,&H00000000,0,0,0,0,100,100,{sp},0,1,2.5,0,2,110,110,{mv},1
-Style: HookS,{font},{hs},&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,{sph},0,1,3,0,8,90,90,230,1
-Style: HookB,{font},{hb},&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,{sph},0,1,3,0,8,90,90,300,1
+Style: Sub,{font},{ss},&H00FFFFFF,&H00FFFFFF,&H88000000,&H00000000,0,0,0,0,100,100,{sp},0,1,{ob},0,2,110,110,{mv},1
+Style: HookS,{font},{hs},&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,{sphs},0,1,{obh},0,8,90,90,230,1
+Style: HookB,{font},{hb},&H00FFFFFF,&H00FFFFFF,&HB4000000,&H00000000,0,0,0,0,100,100,{sph},0,1,{obh},0,8,90,90,300,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-""".replace('{mv}', str(P.get('sub_margin_v', 400))).replace('{font}', os.environ.get('FONT', 'Arial Narrow')).replace('{ss}', os.environ.get('SUB_SIZE', '60')).replace('{hs}', os.environ.get('HOOKS_SIZE', '58')).replace('{hb}', os.environ.get('HOOKB_SIZE', '112')).replace('{sp}', os.environ.get('SPACING_SUB', '0')).replace('{sph}', os.environ.get('SPACING_HOOK', '0'))
+""".replace('{mv}', str(P.get('sub_margin_v', 400))).replace('{font}', os.environ.get('FONT', 'Arial Narrow')).replace('{ss}', os.environ.get('SUB_SIZE', '60')).replace('{hs}', os.environ.get('HOOKS_SIZE', '58')).replace('{hb}', os.environ.get('HOOKB_SIZE', '112')).replace('{sp}', os.environ.get('SPACING_SUB', '0')).replace('{sphs}', os.environ.get('SPACING_HOOKS', os.environ.get('SPACING_HOOK', '0'))).replace('{sph}', os.environ.get('SPACING_HOOK', '0')).replace('{obh}', os.environ.get('OUTLINE_HOOK', '3')).replace('{ob}', os.environ.get('OUTLINE_SUB', '2.5'))
+WT = os.environ.get('WEIGHT', '')
+WTAG = ('\\b' + WT) if WT else ''
+FSP = lambda k: ('\\fsp' + os.environ[k]) if os.environ.get(k) else ''
+HBL = '0' if os.environ.get('OUTLINE_HOOK', '3') == '0' else '3'
+SOFT = os.environ.get('SOFT_SHADOW', '')   # альфа мягкой тени у субтитров (отдельный слой), напр. '90'
 ev = []
 for b in blocks:
     sp = b['spec']
@@ -68,10 +73,10 @@ for b in blocks:
         # хук: строки вручную, с плотным межстрочным интервалом; подчёркивание слова анимацией
         until = float(sp.get('until', b['en'])); t0 = max(0, b['st'] - 0.05)
         y = int(sp.get('hook_y', 220)); col = '{\\c' + MINT + '}'
-        ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookS,,0,0,0,,{{\\an8\\pos(540,{y})\\blur3}}{sp['hook'][0]}")
+        ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookS,,0,0,0,,{{\\an8\\pos(540,{y})\\blur{HBL}{WTAG}{FSP('FSP_HOOKS')}}}{sp['hook'][0]}")
         y += int(sp.get('gap_small', 66))
         for li, line in enumerate(sp['hook'][1:]):
-            ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an8\\pos(540,{y})\\blur3}}{col}{line}")
+            ev.append(f"Dialogue: 0,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an8\\pos(540,{y})\\blur{HBL}{WTAG}{FSP('FSP_HOOK')}}}{col}{line}")
             ul = sp.get('underline')
             if ul and ul['line'] == li:
                 x0, w, uy = ul['x'], ul['w'], y + ul['dy']
@@ -79,6 +84,9 @@ for b in blocks:
                 ev.append(f"Dialogue: 1,{ts(t0)},{ts(until)},HookB,,0,0,0,,{{\\an7\\pos({x0},{uy})\\bord0\\shad0\\1c{MINT}\\clip({x0},{uy-5},{x0},{uy+12})\\t({ta},{tb},\\clip({x0},{uy-5},{x0+w},{uy+12}))\\p1}}m 0 0 l {w} -1 l {w} 2 l 0 3{{\\p0}}")
             y += int(sp.get('gap_big', 96))
         continue
-    ev.append(f"Dialogue: 0,{ts(b['st'])},{ts(b['en'])},Sub,,0,0,0,,{{\\blur3}}{fmt(b['txt'])}")
+    if SOFT:
+        mv = int(P.get('sub_margin_v', 400)) - 3
+        ev.append(f"Dialogue: 0,{ts(b['st'])},{ts(b['en'])},Sub,,112,108,{mv},,{{\\1c&H000000&\\1a&H{SOFT}&\\bord0\\shad0\\blur7{WTAG}{FSP('FSP_SUB')}}}{b['txt']}")
+    ev.append(f"Dialogue: 1,{ts(b['st'])},{ts(b['en'])},Sub,,0,0,0,,{{\\blur{'0' if SOFT else '3'}{WTAG}{FSP('FSP_SUB')}}}{fmt(b['txt'])}")
 open(out, 'w', encoding='utf8').write(head + '\n'.join(ev) + '\n')
 print('блоков:', len(ev), '->', out)

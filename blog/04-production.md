@@ -66,6 +66,6 @@
 ## Шрифт (ноябрь 2026, финальный выбор)
 - Шрифт как в самом первом монтаже скилла: Inter Tight Medium (статичный экземпляр `tools/fonts_inter_ugc/InterTightUGC.ttf`, семейство `InterTightUGC`), плотный трекинг.
 - **Обводки нет нигде** (ни у хука, ни у субтитров). У субтитров только мягкая тень отдельным слоем (`SOFT_SHADOW=A0`), у хука — без тени.
-- **Буквы почти слипаются** — так нравится Ульяне (как у блогеров-референсов). Межбуквенный интервал тегом `\fsp` (поле Spacing в стиле libass игнорирует): субтитры −5, хук мелкий −5, хук крупный −10. Чтобы не слипались слова, пробел расширяется отдельно: `WORD_GAP=3`.
-- Команда: `FONT=InterTightUGC SUB_SIZE=66 HOOKS_SIZE=60 HOOKB_SIZE=118 FSP_SUB=-5 FSP_HOOKS=-5 FSP_HOOK=-10 WORD_GAP=3 OUTLINE_HOOK=0 OUTLINE_SUB=0 SOFT_SHADOW=A0 python3 tools/subs_arial.py plan.json words.json out.ass`, затем `ass=out.ass:fontsdir=tools/fonts_inter_ugc`.
-- Подчёркивание «реально» для хука 118 px (fsp −10): x=325, w=250, dy=113.
+- **Буквы почти слипаются** — так нравится Ульяне (как у блогеров-референсов). Межбуквенный интервал тегом `\fsp` (поле Spacing в стиле libass игнорирует): субтитры −4, хук мелкий −4, хук крупный −8 (−5/−10 — слишком плотно, «каплю свободнее»). Чтобы не слипались слова, пробел расширяется отдельно: `WORD_GAP=3`.
+- Команда: `FONT=InterTightUGC SUB_SIZE=66 HOOKS_SIZE=60 HOOKB_SIZE=118 FSP_SUB=-4 FSP_HOOKS=-4 FSP_HOOK=-8 WORD_GAP=3 OUTLINE_HOOK=0 OUTLINE_SUB=0 SOFT_SHADOW=A0 python3 tools/subs_arial.py plan.json words.json out.ass`, затем `ass=out.ass:fontsdir=tools/fonts_inter_ugc`.
+- Подчёркивание «реально» для хука 118 px (fsp −8): x=312, w=262, dy=113.

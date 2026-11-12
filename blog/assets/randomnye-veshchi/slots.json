@@ -43,7 +43,7 @@
   [
    "/home/user/personal/montage/rils3/pics/shop_a",
    4.8,
-   7.1,
+   6.5,
    [
     300,
     498
@@ -53,7 +53,7 @@
   [
    "/home/user/personal/montage/rils3/pics/shop_b",
    5.3,
-   7.4,
+   6.6,
    [
     787,
     498
@@ -589,6 +589,26 @@
     455
    ],
    468
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/vibe_a",
+   6.6,
+   8.6,
+   [
+    300,
+    502
+   ],
+   530
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/vibe_b",
+   7.0,
+   8.65,
+   [
+    790,
+    496
+   ],
+   530
   ]
  ],
  "slots": [

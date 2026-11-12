@@ -19,7 +19,7 @@ for i, c in enumerate(cues, 1):
     ms = int(c['t'] * 1000)
     parts.append(f"[{i}:a]aresample=48000,volume={c.get('db', -10)}dB,adelay={ms}|{ms}[s{i}]")
 parts.append('[v]' + ''.join(f'[s{i}]' for i in range(1, len(cues) + 1)) +
-             f'amix=inputs={len(cues) + 1}:normalize=0:duration=first,alimiter=limit=0.89[a]')
+             f'amix=inputs={len(cues) + 1}:normalize=0:duration=first,alimiter=limit=0.89,loudnorm=I=-14:TP=-1.5:LRA=11[a]')
 cmd += ['-filter_complex', ';'.join(parts), '-map', '0:v', '-map', '[a]', '-c:v', 'copy',
         '-c:a', 'aac', '-b:a', '320k', '-ar', '48000', '-movflags', '+faststart', out]
 subprocess.run(cmd, check=True)

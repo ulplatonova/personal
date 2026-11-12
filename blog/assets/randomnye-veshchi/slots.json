@@ -281,7 +281,7 @@
    389
   ],
   [
-   "/home/user/personal/montage/rils3/pics/metal_teapot",
+   "/home/user/personal/montage/rils3/pics/metal_tray",
    87.3,
    89.3,
    [
@@ -295,10 +295,20 @@
    93.3,
    95.3,
    [
-    540,
-    461
+    300,
+    475
    ],
-   389
+   413
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/metal_teapot",
+   94.3,
+   96.3,
+   [
+    790,
+    467
+   ],
+   413
   ],
   [
    "/home/user/personal/montage/rils3/pics/cand_home",

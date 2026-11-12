@@ -1,0 +1,105 @@
+<title>Субтитры «Рандомные вещи»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: one narrow column of subtitle rows, time on the left, editable line on the right; sticky status bar */
+:root{
+  --bg:#f6f2ee; --surface:#fffdfb; --fg:#2a211d; --muted:#8b7a70; --line:#e6dcd4;
+  --accent:#c9825a; --accent-soft:#f5c9a6; --changed:#fbeee3; --ok:#4f8a5b;
+  --display:"Inter Tight",system-ui,sans-serif; --body:"Inter Tight",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1c1714; --surface:#26201c; --fg:#f1e8e1; --muted:#a8968a; --line:#3a312b;
+  --accent:#f0b089; --accent-soft:#6b4a36; --changed:#3a2a20; --ok:#8cc79a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1c1714; --surface:#26201c; --fg:#f1e8e1; --muted:#a8968a; --line:#3a312b;
+  --accent:#f0b089; --accent-soft:#6b4a36; --changed:#3a2a20; --ok:#8cc79a; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 60px}
+h1{font-family:var(--display);font-weight:500;letter-spacing:-.03em;font-size:26px;margin:0 0 4px;text-wrap:balance}
+.lede{color:var(--muted);margin:0 0 16px;max-width:60ch}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-block:10px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.status{font-size:13px;color:var(--muted);flex:1;min-width:0}
+.status b{color:var(--accent);font-weight:600}
+.filter{display:flex;gap:6px}
+.filter button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:4px 12px;cursor:pointer}
+.filter button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:34px 54px 1fr;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.n,.t{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row input{width:100%;min-width:0;box-sizing:border-box;font:inherit;font-size:16px;letter-spacing:-.01em;color:var(--fg);background:transparent;border:1px solid transparent;border-radius:8px;padding:6px 8px}
+.row input:hover{border-color:var(--line)}
+.row input:focus{outline:none;border-color:var(--accent);background:var(--surface)}
+.row.changed input{background:var(--changed)}
+.row.saved .t::after{content:" ✓";color:var(--ok)}
+.hook{font-size:12px;color:var(--accent);display:block;margin-top:2px}
+.empty{color:var(--muted);padding:24px 0}
+@media (max-width:420px){.row{grid-template-columns:28px 1fr}.row .t{display:none}}
+@media (prefers-reduced-motion:no-preference){.row input{transition:background .2s,border-color .2s}}
+</style>
+
+<div class="wrap">
+  <h1>Субтитры «Рандомные вещи»</h1>
+  <p class="lede">Нажмите на строку и исправьте текст. Изменение сохраняется само, когда вы уходите со строки. Число слов можно менять — я подгоню тайминг. Когда закончите, напишите в чат «субтитры готовы».</p>
+  <div class="bar">
+    <div class="status" id="status">Загружаю строки…</div>
+    <div class="filter">
+      <button id="f-all" aria-pressed="true">Все</button>
+      <button id="f-changed" aria-pressed="false">Исправленные</button>
+    </div>
+  </div>
+  <div class="rows" id="rows"><div class="empty">Строки появятся через пару секунд.</div></div>
+</div>
+
+<script>
+const rowsEl=document.getElementById('rows'), statusEl=document.getElementById('status');
+let docs=[], onlyChanged=false, db=null, saving=0;
+function fmt(t){const m=Math.floor(t/60),s=(t%60).toFixed(1).padStart(4,'0');return m+':'+s}
+function updateStatus(){
+  const ch=docs.filter(d=>d.text!==d.orig).length;
+  statusEl.innerHTML=db?(`${docs.length} строк · исправлено: <b>${ch}</b>`+(saving?' · сохраняю…':'')):'Редактирование недоступно в этом окне — откройте страницу в claude.ai, войдя в аккаунт.';
+}
+function render(){
+  const list=onlyChanged?docs.filter(d=>d.text!==d.orig):docs;
+  if(!list.length){rowsEl.innerHTML='<div class="empty">'+(onlyChanged?'Пока ничего не исправлено.':'Строк нет.')+'</div>';return}
+  const active=document.activeElement&&document.activeElement.id;
+  rowsEl.textContent='';
+  for(const d of list){
+    const r=document.createElement('div'); r.className='row'+(d.text!==d.orig?' changed':''); r.id='r'+d.n;
+    const n=document.createElement('span'); n.className='n'; n.textContent=d.n;
+    const t=document.createElement('span'); t.className='t'; t.textContent=fmt(d.t);
+    const box=document.createElement('div'); box.style.minWidth='0';
+    const i=document.createElement('input'); i.id='in'+d.n; i.value=d.text; i.disabled=!db; i.setAttribute('aria-label','Строка '+d.n);
+    i.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();const nx=document.getElementById('in'+(d.n+1));nx?nx.focus():i.blur()}});
+    i.addEventListener('blur',()=>save(d,i.value.trim(),r));
+    box.appendChild(i);
+    if(d.n===0){const h=document.createElement('span');h.className='hook';h.textContent='хук: строки делятся знаком « / »';box.appendChild(h)}
+    r.append(n,t,box); rowsEl.appendChild(r);
+  }
+  if(active){const el=document.getElementById(active); if(el) el.focus()}
+  updateStatus();
+}
+async function save(d,val,r){
+  if(!db||val===d.text) return;
+  d.text=val; saving++; updateStatus(); r.classList.toggle('changed',val!==d.orig);
+  try{await db.doc('subs/'+String(d.n).padStart(3,'0')).update({text:val}); r.classList.add('saved')}
+  catch(e){statusEl.textContent='Не сохранилось: '+(e&&e.message||'ошибка')+'. Попробуйте ещё раз.'}
+  finally{saving--; updateStatus()}
+}
+document.getElementById('f-all').onclick=()=>{onlyChanged=false;setPressed();render()};
+document.getElementById('f-changed').onclick=()=>{onlyChanged=true;setPressed();render()};
+function setPressed(){document.getElementById('f-all').setAttribute('aria-pressed',!onlyChanged);document.getElementById('f-changed').setAttribute('aria-pressed',onlyChanged)}
+(async()=>{
+  const timer=setTimeout(()=>{if(!docs.length) statusEl.textContent='Не удалось загрузить строки. Обновите страницу.'},10000);
+  try{ db=await (window.claude&&window.claude.use?window.claude.use('db'):null) }catch(e){ db=null }
+  if(!db){clearTimeout(timer);updateStatus();return}
+  db.collection('subs').orderBy('n').onSnapshot(snap=>{
+    clearTimeout(timer);
+    const focused=document.activeElement&&document.activeElement.tagName==='INPUT';
+    docs=snap.docs.map(s=>s.data()).filter(Boolean);
+    if(!focused) render(); else updateStatus();
+  },e=>{clearTimeout(timer);statusEl.textContent='Не удалось загрузить строки: '+(e&&e.message||'ошибка')});
+})();
+</script>

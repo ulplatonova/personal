@@ -5,410 +5,460 @@
    0.1,
    2.6,
    [
-    230,
-    700
+    150,
+    440
    ],
-   400
+   355
   ],
   [
    "/home/user/personal/montage/rils3/pics/card_02",
    0.4,
    2.6,
    [
-    850,
-    700
+    930,
+    440
    ],
-   400
+   355
   ],
   [
    "/home/user/personal/montage/rils3/pics/card_03",
    0.7,
    2.6,
    [
-    200,
-    1300
+    150,
+    830
    ],
-   400
+   355
   ],
   [
    "/home/user/personal/montage/rils3/pics/card_04",
    1.0,
    2.6,
    [
-    880,
-    1300
+    930,
+    760
    ],
-   400
+   290
   ],
   [
    "/home/user/personal/montage/rils3/pics/shop_a",
-   4.8,
-   8.4,
+   5.9,
+   7.9,
    [
     300,
-    560
+    520
    ],
-   600
+   498
   ],
   [
    "/home/user/personal/montage/rils3/pics/shop_b",
-   5.5,
+   6.4,
    8.4,
    [
     780,
+    512
+   ],
+   498
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/nb_coffee",
+   8.7,
+   10.7,
+   [
+    300,
     520
    ],
-   600
+   498
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/nb_journal",
+   9.4,
+   11.4,
+   [
+    790,
+    504
+   ],
+   498
   ],
   [
    "/home/user/personal/montage/rils3/pics/note_shop",
-   8.7,
-   15.0,
+   16.2,
+   18.2,
    [
     780,
-    560
+    504
    ],
-   600
+   498
   ],
   [
    "/home/user/personal/montage/rils3/pics/note_many",
-   16.2,
-   19.6,
+   27.4,
+   29.4,
    [
-    300,
-    560
+    540,
+    512
    ],
-   600
+   498
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_09",
+   "/home/user/personal/montage/rils3/pics/pen_clueless",
    19.9,
+   21.9,
+   [
+    300,
+    513
+   ],
+   530
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/pen_pink",
+   20.6,
    22.6,
    [
-    780,
-    560
+    790,
+    530
    ],
    600
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_10",
+   "/home/user/personal/montage/rils3/pics/pen_giant",
    22.8,
-   27.2,
+   24.8,
    [
-    300,
-    560
+    780,
+    512
    ],
-   600
+   498
   ],
   [
    "/home/user/personal/montage/rils3/pics/note_furcroc",
    30.2,
-   38.2,
+   32.2,
    [
     780,
-    560
+    489
    ],
-   600
+   440
   ],
   [
    "/home/user/personal/montage/rils3/pics/heels_grid",
-   39.0,
-   43.5,
+   39.3,
+   41.1,
    [
     300,
-    600
+    489
    ],
-   600
+   440
   ],
   [
    "/home/user/personal/montage/rils3/pics/heels_pile",
-   40.4,
-   43.5,
+   39.8,
+   41.1,
    [
     790,
-    540
+    491
    ],
-   600
+   468
   ],
   [
    "/home/user/personal/montage/rils3/pics/heels_jc",
-   41.8,
-   43.5,
+   40.4,
+   41.1,
    [
     540,
-    580
+    489
    ],
-   520
+   440
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_15",
+   "/home/user/personal/montage/rils3/pics/shoe_booties",
    43.6,
-   45.3,
+   45.6,
    [
-    780,
-    560
+    300,
+    489
    ],
-   600
+   440
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_16",
+   "/home/user/personal/montage/rils3/pics/shoe_boots",
    44.5,
-   46.2,
+   46.5,
    [
-    300,
-    560
+    790,
+    489
    ],
-   600
+   440
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_17",
+   "/home/user/personal/montage/rils3/pics/shoe_pumps",
    45.4,
-   47.8,
+   47.4,
    [
-    780,
-    560
+    540,
+    489
    ],
-   600
+   440
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_18",
+   "/home/user/personal/montage/rils3/pics/wardrobe",
    48.9,
-   55.6,
+   50.9,
    [
     300,
-    560
+    491
    ],
-   600
+   468
   ],
   [
    "/home/user/personal/montage/rils3/pics/dish_red",
-   59.3,
-   69.3,
+   59.9,
+   61.9,
    [
     300,
-    600
+    461
    ],
-   600
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/dish_brown",
-   60.2,
-   69.3,
+   60.6,
+   62.6,
    [
     780,
-    540
+    461
    ],
-   600
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/dish_blue",
    69.3,
-   71.8,
+   71.3,
    [
     540,
-    560
+    461
    ],
-   620
+   389
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_21",
+   "/home/user/personal/montage/rils3/pics/silvie1",
    71.9,
-   79.2,
+   73.9,
    [
-    780,
-    560
+    300,
+    475
    ],
-   600
+   413
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/silvie2",
+   73.6,
+   75.6,
+   [
+    790,
+    467
+   ],
+   413
   ],
   [
    "/home/user/personal/montage/rils3/pics/metal_set",
    79.8,
-   90.4,
+   81.8,
    [
     300,
-    600
+    461
    ],
-   600
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/metal_madeleine",
    84.3,
-   90.4,
+   86.3,
    [
     790,
-    540
+    461
    ],
-   600
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/metal_teapot",
    87.3,
-   90.4,
+   89.3,
    [
     540,
-    580
+    451
    ],
-   560
+   389
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_25",
+   "/home/user/personal/montage/rils3/pics/card_02",
    93.3,
-   98.6,
+   95.3,
    [
-    780,
-    560
+    540,
+    461
    ],
-   600
+   389
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_26",
-   98.9,
-   102.6,
+   "/home/user/personal/montage/rils3/pics/cand_home",
+   99.8,
+   101.8,
    [
     300,
-    560
+    461
    ],
-   600
+   389
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_27",
-   102.9,
-   106.5,
+   "/home/user/personal/montage/rils3/pics/cand_dinner",
+   100.4,
+   102.4,
    [
-    780,
-    560
+    790,
+    461
    ],
-   600
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/fur_rack",
-   107.3,
-   115.0,
+   107.7,
+   109.7,
    [
     300,
-    600
+    448
    ],
-   600
+   440
   ],
   [
    "/home/user/personal/montage/rils3/pics/fur_coat",
    108.9,
-   115.0,
+   110.9,
    [
     790,
-    540
+    461
    ],
-   600
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/fur_ski",
    110.4,
-   115.0,
+   112.4,
    [
     540,
-    580
+    455
    ],
-   580
+   389
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_29",
-   116.0,
-   118.2,
+   "/home/user/personal/montage/rils3/pics/my_furcoats",
+   115.1,
+   117.1,
    [
-    780,
-    560
+    300,
+    467
    ],
-   600
+   413
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_30",
+   "/home/user/personal/montage/rils3/pics/my_jacket",
    118.3,
    120.1,
    [
-    300,
-    560
+    790,
+    461
    ],
-   600
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/fshoe_loafers",
    120.2,
-   123.0,
+   122.2,
    [
     300,
-    600
+    467
    ],
-   600
+   413
   ],
   [
-   "/home/user/personal/montage/rils3/pics/fshoe_wedge",
+   "/home/user/personal/montage/rils3/pics/fshoe_slippers",
    122.1,
-   126.9,
+   124.1,
    [
     790,
-    540
+    461
    ],
-   560
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/fshoe_ysl",
    123.0,
-   126.9,
+   125.0,
    [
     300,
-    620
+    461
    ],
-   600
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/fshoe_leo",
    124.3,
-   126.9,
+   126.3,
    [
     560,
-    560
+    449
    ],
-   520
+   365
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_34",
+   "/home/user/personal/montage/rils3/pics/pen_clueless",
    127.7,
    129.4,
    [
     300,
-    560
+    456
    ],
-   600
+   413
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_35",
+   "/home/user/personal/montage/rils3/pics/fur_keychain",
    129.5,
-   131.6,
+   131.5,
    [
-    780,
-    560
+    790,
+    461
    ],
-   600
+   389
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_36",
-   134.9,
-   137.0,
+   "/home/user/personal/montage/rils3/pics/fur_shop",
+   134.4,
+   136.4,
+   [
+    540,
+    449
+   ],
+   365
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/heels_small",
+   41.1,
+   43.1,
    [
     300,
-    560
+    489
    ],
-   600
+   440
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_37",
-   147.2,
-   150.6,
+   "/home/user/personal/montage/rils3/pics/heels_high",
+   42.1,
+   43.5,
    [
-    780,
-    560
+    790,
+    489
    ],
-   600
+   440
   ]
  ],
  "slots": [

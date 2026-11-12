@@ -125,8 +125,8 @@
    22.8,
    24.8,
    [
-    780,
-    512
+    300,
+    520
    ],
    498
   ],
@@ -457,6 +457,36 @@
    [
     790,
     489
+   ],
+   440
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/pen_giant2",
+   23.6,
+   25.6,
+   [
+    790,
+    512
+   ],
+   498
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/wardrobe2",
+   50.8,
+   52.8,
+   [
+    790,
+    489
+   ],
+   440
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/wardrobe3",
+   52.9,
+   54.9,
+   [
+    540,
+    477
    ],
    440
   ]

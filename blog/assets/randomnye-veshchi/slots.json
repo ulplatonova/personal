@@ -5,370 +5,370 @@
    0.1,
    2.6,
    [
-    200,
-    600
+    220,
+    690
    ],
-   290
+   340
   ],
   [
    "/home/user/personal/montage/rils3/pics/card_02",
    0.4,
    2.6,
    [
-    880,
-    600
+    860,
+    690
    ],
-   290
+   340
   ],
   [
    "/home/user/personal/montage/rils3/pics/card_03",
    0.7,
    2.6,
    [
-    170,
-    1180
+    190,
+    1250
    ],
-   290
+   340
   ],
   [
    "/home/user/personal/montage/rils3/pics/card_04",
    1.0,
    2.6,
    [
-    910,
-    1180
+    890,
+    1250
    ],
-   290
+   340
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_05",
+   "/home/user/personal/montage/rils3/pics/shop_a",
    4.8,
    8.4,
    [
-    830,
-    430
+    270,
+    520
    ],
-   300
+   430
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_06",
+   "/home/user/personal/montage/rils3/pics/shop_b",
+   5.5,
+   8.4,
+   [
+    810,
+    520
+   ],
+   430
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/note_shop",
    8.7,
    11.0,
    [
-    250,
-    430
+    810,
+    520
    ],
-   300
+   430
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_07",
    12.5,
    15.0,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_08",
+   "/home/user/personal/montage/rils3/pics/note_many",
    16.2,
    19.6,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   430
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_09",
    19.9,
    22.6,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_10",
    22.8,
    27.2,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
-   "/home/user/personal/montage/rils3/slots/slot_11",
+   "/home/user/personal/montage/rils3/pics/note_furcroc",
    30.2,
-   31.0,
-   [
-    830,
-    430
-   ],
-   300
-  ],
-  [
-   "/home/user/personal/montage/rils3/slots/slot_12",
-   31.0,
    33.6,
    [
-    250,
-    430
+    810,
+    520
    ],
-   300
+   440
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_13",
    36.5,
    38.2,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_14",
    39.0,
    43.4,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_15",
    43.6,
    45.3,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_16",
    44.5,
    46.2,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_17",
    45.4,
    47.8,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_18",
    48.9,
    55.6,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_19",
    59.3,
    66.0,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_20",
    66.2,
    70.8,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_21",
    71.9,
    79.2,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_22",
    79.8,
    84.0,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_23",
    84.3,
    86.2,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_24",
    87.3,
    90.4,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_25",
    93.3,
    98.6,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_26",
    98.9,
    102.6,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_27",
    102.9,
    106.5,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_28",
    107.3,
    110.4,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_29",
    116.0,
    118.2,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_30",
    118.3,
    120.1,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_31",
    121.3,
    122.0,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_32",
    122.1,
    123.0,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_33",
    123.0,
    125.0,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_34",
    127.7,
    129.4,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_35",
    129.5,
    131.6,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_36",
    134.9,
    137.0,
    [
-    250,
-    430
+    270,
+    520
    ],
-   300
+   400
   ],
   [
    "/home/user/personal/montage/rils3/slots/slot_37",
    147.2,
    150.6,
    [
-    830,
-    430
+    810,
+    520
    ],
-   300
+   400
   ]
  ],
  "slots": [

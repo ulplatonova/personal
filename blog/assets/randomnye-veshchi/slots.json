@@ -233,12 +233,12 @@
   [
    "/home/user/personal/montage/rils3/pics/dish_blue",
    69.3,
-   71.3,
+   71.6,
    [
-    540,
-    463
+    300,
+    460
    ],
-   462
+   466
   ],
   [
    "/home/user/personal/montage/rils3/pics/silvie1",
@@ -391,14 +391,14 @@
    431
   ],
   [
-   "/home/user/personal/montage/rils3/pics/pen_clueless",
+   "/home/user/personal/montage/rils3/pics/pen_pompom_pink",
    127.7,
    129.4,
    [
     540,
-    454
+    447
    ],
-   486
+   428
   ],
   [
    "/home/user/personal/montage/rils3/pics/fur_keychain",
@@ -559,6 +559,16 @@
     489
    ],
    511
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/dish_blue2",
+   69.9,
+   71.9,
+   [
+    790,
+    456
+   ],
+   466
   ]
  ],
  "slots": [

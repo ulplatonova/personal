@@ -6,9 +6,9 @@
    2.6,
    [
     150,
-    440
+    520
    ],
-   355
+   360
   ],
   [
    "/home/user/personal/montage/rils3/pics/card_02",
@@ -16,49 +16,49 @@
    2.6,
    [
     930,
-    440
+    520
    ],
-   355
+   360
   ],
   [
    "/home/user/personal/montage/rils3/pics/card_03",
    0.7,
    2.6,
    [
-    150,
-    830
+    405,
+    600
    ],
-   355
+   300
   ],
   [
    "/home/user/personal/montage/rils3/pics/card_04",
    1.0,
    2.6,
    [
-    930,
-    760
+    680,
+    600
    ],
-   290
+   300
   ],
   [
    "/home/user/personal/montage/rils3/pics/shop_a",
-   5.9,
-   7.9,
+   4.8,
+   6.8,
    [
     300,
-    520
+    643
    ],
-   498
+   389
   ],
   [
    "/home/user/personal/montage/rils3/pics/shop_b",
-   6.4,
-   8.4,
+   5.3,
+   7.3,
    [
-    780,
-    512
+    790,
+    606
    ],
-   498
+   303
   ],
   [
    "/home/user/personal/montage/rils3/pics/nb_coffee",
@@ -142,13 +142,13 @@
   ],
   [
    "/home/user/personal/montage/rils3/pics/heels_grid",
-   39.3,
-   41.1,
+   38.3,
+   40.3,
    [
-    300,
-    489
+    540,
+    542
    ],
-   440
+   343
   ],
   [
    "/home/user/personal/montage/rils3/pics/heels_pile",
@@ -212,23 +212,23 @@
   ],
   [
    "/home/user/personal/montage/rils3/pics/dish_red",
-   59.9,
-   61.9,
+   58.8,
+   60.8,
    [
     300,
-    461
+    587
    ],
-   389
+   268
   ],
   [
    "/home/user/personal/montage/rils3/pics/dish_brown",
-   60.6,
-   62.6,
+   59.4,
+   61.4,
    [
-    780,
-    461
+    790,
+    579
    ],
-   389
+   252
   ],
   [
    "/home/user/personal/montage/rils3/pics/dish_blue",
@@ -312,33 +312,33 @@
   ],
   [
    "/home/user/personal/montage/rils3/pics/cand_home",
-   99.8,
-   101.8,
+   98.8,
+   100.8,
    [
     300,
-    461
+    531
    ],
-   389
+   323
   ],
   [
    "/home/user/personal/montage/rils3/pics/cand_dinner",
-   100.4,
-   102.4,
+   99.4,
+   101.4,
    [
     790,
-    461
+    524
    ],
-   389
+   323
   ],
   [
    "/home/user/personal/montage/rils3/pics/fur_rack",
-   107.7,
-   109.7,
+   106.7,
+   108.7,
    [
     300,
-    448
+    520
    ],
-   440
+   365
   ],
   [
    "/home/user/personal/montage/rils3/pics/fur_coat",

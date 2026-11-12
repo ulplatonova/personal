@@ -24,6 +24,9 @@ PDIR = os.path.join(HERE, 'prices')
 # карточки с ценой: файл, начало, конец, центр, ширина
 PRICES = []
 
+MASKS = np.load(os.environ['MASKS']) if os.environ.get('MASKS') else None
+MFPS = 15
+
 def ease(x):
     x = min(max(x, 0), 1); return x * x * (3 - 2 * x)
 
@@ -203,6 +206,12 @@ while oi < nout:
         draw_sticker(fr, name, t, t0, t1, c)
     for name, t0, t1, c, _ in PRICES:
         draw_price(fr, name, t, t0, t1, c)
+    if MASKS is not None:
+        mi = min(int(t * MFPS), len(MASKS) - 1)
+        m = cv2.resize(MASKS[mi], (W, H), interpolation=cv2.INTER_LINEAR).astype(np.float32) / 255
+        m = np.clip((m - 0.35) / 0.4, 0, 1)
+        m = cv2.GaussianBlur(m, (0, 0), 2 * W / 1080)[..., None]
+        fr = (fr * (1 - m) + cur * m).astype(np.uint8)
     enc.stdin.write(fr.tobytes()); oi += 1
 enc.stdin.close(); enc.wait(); dec.terminate()
 print('->', OUT)

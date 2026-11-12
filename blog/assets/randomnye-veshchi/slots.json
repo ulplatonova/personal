@@ -261,36 +261,6 @@
    413
   ],
   [
-   "/home/user/personal/montage/rils3/pics/metal_set",
-   79.8,
-   84.8,
-   [
-    300,
-    467
-   ],
-   413
-  ],
-  [
-   "/home/user/personal/montage/rils3/pics/metal_madeleine",
-   84.3,
-   89.3,
-   [
-    790,
-    461
-   ],
-   389
-  ],
-  [
-   "/home/user/personal/montage/rils3/pics/metal_tray",
-   87.3,
-   89.7,
-   [
-    540,
-    451
-   ],
-   389
-  ],
-  [
    "/home/user/personal/montage/rils3/pics/card_02",
    93.3,
    96.1,
@@ -499,6 +469,86 @@
     477
    ],
    440
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/dish_plates",
+   62.9,
+   66.3,
+   [
+    300,
+    475
+   ],
+   413
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/dish_green",
+   63.7,
+   66.6,
+   [
+    790,
+    461
+   ],
+   389
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/dish_shelf",
+   64.5,
+   66.9,
+   [
+    540,
+    461
+   ],
+   389
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/metal_set",
+   79.8,
+   84.2,
+   [
+    300,
+    467
+   ],
+   413
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/metal_trays",
+   81.6,
+   84.5,
+   [
+    790,
+    467
+   ],
+   413
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/metal_shell",
+   82.4,
+   84.8,
+   [
+    540,
+    461
+   ],
+   389
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/metal_madeleine",
+   84.3,
+   89.1,
+   [
+    790,
+    461
+   ],
+   389
+  ],
+  [
+   "/home/user/personal/montage/rils3/pics/metal_tray",
+   87.3,
+   89.4,
+   [
+    300,
+    461
+   ],
+   389
   ]
  ],
  "slots": [

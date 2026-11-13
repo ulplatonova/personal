@@ -20,7 +20,9 @@ for i, c in enumerate(cues, 1):
     parts.append(f"[{i}:a]aresample=48000,volume={c.get('db', -10)}dB,adelay={ms}|{ms}[s{i}]")
 parts.append('[v]' + ''.join(f'[s{i}]' for i in range(1, len(cues) + 1)) +
              f'amix=inputs={len(cues) + 1}:normalize=0:duration=first,alimiter=limit=0.89,loudnorm=I=-14:TP=-1.5:LRA=11[a]')
-cmd += ['-filter_complex', ';'.join(parts), '-map', '0:v', '-map', '[a]', '-c:v', 'copy',
-        '-c:a', 'aac', '-b:a', '320k', '-ar', '48000', '-movflags', '+faststart', out]
+vc = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=codec_name', '-of', 'csv=p=0', src],
+                    capture_output=True, text=True).stdout.strip()
+cmd += ['-filter_complex', ';'.join(parts), '-map', '0:v', '-map', '[a]', '-c:v', 'copy'] + (['-tag:v', 'hvc1'] if vc == 'hevc' else []) + [
+         '-c:a', 'aac', '-b:a', '320k', '-ar', '48000', '-movflags', '+faststart', out]
 subprocess.run(cmd, check=True)
 print('->', out, f'({len(cues)} звуков)')

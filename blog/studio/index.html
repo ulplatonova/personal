@@ -1,0 +1,290 @@
+<title>Студия Ульяны</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=Inter+Tight:wght@400;500;600&display=swap">
+<style>
+/* Layout: одна колонка. Сверху список роликов, ниже карточка выбранного ролика: шкала этапов и действие текущего этапа. */
+:root{
+  --bg:#F9F9F9; --surface:#FFFFFF; --ink:#2B1214; --muted:#6B5F63; --line:#E3E0E1;
+  --accent:#681A1D; --on-accent:#F9F9F9; --blue:#7A91A9; --blue-soft:#E4EAF0; --blue-ink:#3F5670;
+  --peach:#F5C9A6; --peach-soft:#FBEEE3; --cut:#B3A3A6; --ok:#3F7A52; --ok-soft:#E3F0E6;
+  --font:"Inter Tight","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Unbounded","Inter Tight",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#170C0E; --surface:#231316; --ink:#F2EAEA; --muted:#B3A3A6; --line:#3D2A2D;
+  --accent:#E6A3A7; --on-accent:#170C0E; --blue:#A9BCD0; --blue-soft:#2A3440; --blue-ink:#A9BCD0;
+  --peach:#F0B089; --peach-soft:#3A2A20; --cut:#6B5F63; --ok:#8CC79A; --ok-soft:#1F3326; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#170C0E; --surface:#231316; --ink:#F2EAEA; --muted:#B3A3A6; --line:#3D2A2D;
+  --accent:#E6A3A7; --on-accent:#170C0E; --blue:#A9BCD0; --blue-soft:#2A3440; --blue-ink:#A9BCD0;
+  --peach:#F0B089; --peach-soft:#3A2A20; --cut:#6B5F63; --ok:#8CC79A; --ok-soft:#1F3326; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;
+  padding-block:24px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-family:var(--display);font-size:24px;line-height:1.15;letter-spacing:-.02em;font-weight:600;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-size:17px;line-height:1.25;letter-spacing:-.01em;font-weight:600;margin:0;text-wrap:balance;min-width:0;overflow-wrap:anywhere}
+h3{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.sub{color:var(--muted);margin:6px 0 0;font-size:14px;max-width:60ch}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.between{justify-content:space-between}
+button,input,textarea,select{font:inherit;color:inherit}
+.btn{font-family:var(--display);font-weight:500;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:10px 16px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.quiet{border-color:transparent;background:transparent;color:var(--muted);padding-inline:8px}
+.btn:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.list{display:flex;flex-direction:column;gap:6px}
+.item{display:flex;gap:12px;align-items:center;justify-content:space-between;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+.item[aria-current="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.item .t{font-weight:500;min-width:0;overflow-wrap:anywhere}
+.item .d{color:var(--muted);font-size:13px}
+.pill{flex:none;font-size:12px;font-weight:500;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.pill.you{background:var(--peach-soft);color:var(--ink);box-shadow:inset 0 0 0 1px var(--peach)}
+.pill.me{background:var(--blue-soft);color:var(--blue-ink)}
+.pill.done{background:var(--ok-soft);color:var(--ok)}
+.pill.ex{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:18px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;list-style:none;margin:0;padding:0}
+.steps li{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);min-width:0}
+.steps li::before{content:"";height:4px;border-radius:2px;background:var(--line)}
+.steps li.past::before{background:var(--blue)}
+.steps li.now{color:var(--ink);font-weight:600}
+.steps li.now::before{background:var(--accent)}
+.note{background:var(--blue-soft);color:var(--ink);border-radius:10px;padding:12px 14px;font-size:14px}
+.note b{font-weight:600}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label,.lbl{font-size:13px;font-weight:600}
+.hint{font-size:13px;color:var(--muted)}
+input[type=text],input[type=url],textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:80px;resize:vertical}
+.styles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+.opt{position:relative;display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;background:var(--bg)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt:has(input:checked){border-color:var(--accent);background:var(--surface);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.opt .n{font-weight:600}
+.opt .h{font-size:13px;color:var(--muted)}
+.checks{display:flex;flex-direction:column;gap:8px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer}
+.check input{margin-top:3px;accent-color:var(--accent)}
+.lines{display:flex;flex-direction:column;gap:4px}
+.line{display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center}
+.line .tc{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.line input[type=text]{padding:8px 10px}
+.line.cut input[type=text]{text-decoration:line-through;color:var(--cut)}
+.cutbtn{font-size:12px;border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 10px;cursor:pointer;color:var(--muted);white-space:nowrap}
+.line.cut .cutbtn{color:var(--accent);border-color:var(--accent)}
+video{width:100%;max-width:360px;aspect-ratio:9/16;background:#000;border-radius:12px;display:block}
+.vwrap{display:flex;justify-content:center}
+.hist{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none;font-size:14px}
+.hist li{border-left:2px solid var(--line);padding-left:10px}
+.hist .v{font-size:12px;color:var(--muted)}
+.copy{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px}
+.copy code{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-family:var(--font);user-select:all;overflow-wrap:anywhere}
+.empty{color:var(--muted);font-size:14px;text-align:center;padding:24px 8px;border:1px dashed var(--line);border-radius:12px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;z-index:20}
+@media (prefers-reduced-motion:no-preference){.card{animation:in .25s ease-out}@keyframes in{from{transform:translateY(4px)}to{transform:none}}}
+</style>
+
+<div class="wrap">
+  <header class="row between">
+    <div style="min-width:0">
+      <h1>Студия</h1>
+      <p class="sub">Заявка на монтаж, план нарезки, черновик и правки в одном окне. Монтирую я, Claude, в вашем стиле.</p>
+    </div>
+    <button class="btn primary" id="newBtn" type="button">Новый ролик</button>
+  </header>
+
+  <section class="list" id="list" aria-label="Ролики">
+    <div class="empty" id="loading">Загружаю ролики…</div>
+  </section>
+
+  <section id="detail"></section>
+</div>
+
+<script>
+const STYLES = {
+  'belo-rozovye': {n:'Бело-розовые субтитры', h:'Ваш эталон: Inter Tight, хук с персиковыми строками и подчёркиванием, наклейки в углах.'},
+  'minimal': {n:'Минимал', h:'Резка пауз, субтитры по словам, хук и призыв в конце со словом от руки.'},
+  'ugc': {n:'UGC с доской', h:'Акцентные слова другим шрифтом, окно с текстом от руки, доска картинок по теме.'}
+};
+const OPTIONS = {
+  sounds: 'Вставки со звуками (поп, щелчок на каждой картинке)',
+  stickers: 'Наклейки средств и цены в верхних углах',
+  speed: 'Ускорить речь до 1.3×'
+};
+const STEP = {new:0, plan:1, approved:1, draft:2, fixes:2, final_requested:3, done:3};
+const WAIT_ME = {new:'Готовлю план', approved:'Монтирую черновик', fixes:'Вношу правки', final_requested:'Собираю финал 4K'};
+const WAIT_YOU = {plan:'Проверьте план', draft:'Посмотрите черновик'};
+
+let db = null, reels = [], selected = null, creating = false, lastKey = '';
+const local = {}; // несохранённые правки плана по id ролика
+try { selected = localStorage.getItem('studio.sel'); } catch(e) {}
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmtDate = ms => ms ? new Date(ms).toLocaleDateString('ru-RU', {day:'numeric', month:'long'}) : '';
+function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600); }
+function pill(r){
+  if (r.example) return '<span class="pill ex">пример</span>';
+  if (r.status==='done') return '<span class="pill done">Готово</span>';
+  if (WAIT_YOU[r.status]) return `<span class="pill you">${WAIT_YOU[r.status]}</span>`;
+  return `<span class="pill me">${WAIT_ME[r.status]||'В работе'}</span>`;
+}
+
+function renderList(){
+  const el = $('#list');
+  if (!reels.length){ el.innerHTML = '<div class="empty">Роликов пока нет. Нажмите «Новый ролик», выберите стиль и отправьте заявку.</div>'; return; }
+  el.innerHTML = reels.map(r => `<button class="item" type="button" data-id="${esc(r.id)}" aria-current="${!creating && r.id===selected}">
+      <span style="min-width:0"><span class="t">${esc(r.title||'Без названия')}</span><br><span class="d">${esc(STYLES[r.style]?.n||'')} · ${fmtDate(r.createdAt)}</span></span>${pill(r)}</button>`).join('');
+}
+
+function stepsHtml(r){
+  const names = ['Заявка','План','Черновик','Готово'], cur = STEP[r.status] ?? 0;
+  return `<ol class="steps">${names.map((n,i)=>`<li class="${i<cur||r.status==='done'?'past':''} ${i===cur&&r.status!=='done'?'now':''}">${n}</li>`).join('')}</ol>`;
+}
+function pingHtml(r){
+  return `<div class="copy"><span class="hint">Напишите мне в чат, и я возьмусь:</span><code>Проверь студию: ${esc(r.title||'ролик')}</code><button class="btn quiet" type="button" data-copy="Проверь студию: ${esc(r.title||'ролик')}">Скопировать</button></div>`;
+}
+function requestSummary(r){
+  const opts = Object.keys(OPTIONS).filter(k=>r.options?.[k]).map(k=>OPTIONS[k].replace(/ \(.*\)/,''));
+  return `<div class="field"><h3>Заявка</h3><div class="hint">
+    <b>${esc(STYLES[r.style]?.n||'')}</b>${opts.length?' · '+esc(opts.join(', ')):''}<br>
+    Видео: ${r.source?.how==='drive' ? `<a href="${esc(r.source.link)}" target="_blank" rel="noopener">ссылка на Google Диск</a>` : 'прикреплю в чат'}
+    ${r.hook?`<br>Хук: «${esc(r.hook)}»`:''}${r.wishes?`<br>Пожелания: ${esc(r.wishes)}`:''}</div></div>`;
+}
+
+function newForm(){
+  return `<form class="card" id="newForm" novalidate>
+    <h2>Новый ролик</h2>
+    <div class="field"><label for="f-title">Как назовём</label><input type="text" id="f-title" placeholder="Например: «Косметика, которая стоит своих денег»" required></div>
+    <div class="field"><span class="lbl">Как передадите видео</span>
+      <div class="checks">
+        <label class="check"><input type="radio" name="how" value="chat" id="f-how-chat" checked> Прикреплю файл в чат с Claude</label>
+        <label class="check"><input type="radio" name="how" value="drive" id="f-how-drive"> Ссылкой на Google Диск</label>
+      </div>
+      <input type="url" id="f-link" placeholder="https://drive.google.com/…" hidden>
+      <span class="hint">Снимайте как обычно: 4K, 30 к/с, HDR выключен. Исходник я не меняю.</span>
+    </div>
+    <div class="field"><span class="lbl">Стиль</span><div class="styles">
+      ${Object.entries(STYLES).map(([k,s],i)=>`<label class="opt"><input type="radio" name="style" value="${k}" id="f-style-${k}" ${i===0?'checked':''}><span class="n">${s.n}</span><span class="h">${s.h}</span></label>`).join('')}
+    </div></div>
+    <div class="field"><span class="lbl">Дополнительно</span><div class="checks">
+      ${Object.entries(OPTIONS).map(([k,t])=>`<label class="check"><input type="checkbox" id="f-opt-${k}" value="${k}"> ${t}</label>`).join('')}
+    </div></div>
+    <div class="field"><label for="f-hook">Хук, если уже придумали</label><input type="text" id="f-hook" placeholder="Можно оставить пустым, тогда предложу варианты"></div>
+    <div class="field"><label for="f-wishes">Пожелания</label><textarea id="f-wishes" placeholder="Что оставить, что вырезать, где поставить наклейки"></textarea></div>
+    <div class="row"><button class="btn primary" type="submit">Отправить в студию</button><button class="btn quiet" type="button" id="cancelNew">Отмена</button></div>
+  </form>`;
+}
+
+function planHtml(r){
+  const L = local[r.id] || (local[r.id] = {lines: (r.plan?.lines||[]).map(l=>({...l})), hookPick: r.plan?.hookPick ?? 0, comment: ''});
+  const hooks = r.plan?.hooks || [];
+  return `${r.plan?.note?`<div class="note">${esc(r.plan.note)}</div>`:''}
+    ${hooks.length?`<div class="field"><span class="lbl">Хук</span><div class="checks">${hooks.map((h,i)=>`<label class="check"><input type="radio" name="hookPick" id="hp-${i}" value="${i}" ${L.hookPick===i?'checked':''}> ${esc(h)}</label>`).join('')}</div></div>`:''}
+    <div class="field"><span class="lbl">Субтитры и нарезка</span><span class="hint">Текст можно поправить прямо в строке. «Вырезать» убирает фразу из ролика.</span>
+      <div class="lines">${L.lines.map((l,i)=>`<div class="line ${l.cut?'cut':''}"><span class="tc">${esc(l.t)}</span><input type="text" id="ln-${i}" data-line="${i}" value="${esc(l.text)}" aria-label="Фраза ${esc(l.t)}"><button class="cutbtn" type="button" data-cut="${i}" aria-pressed="${!!l.cut}">${l.cut?'Вернуть':'Вырезать'}</button></div>`).join('')}</div></div>
+    <div class="field"><label for="planComment">Комментарий к плану</label><textarea id="planComment" placeholder="Если что-то не так: что поменять">${esc(L.comment)}</textarea></div>
+    <div class="row"><button class="btn primary" type="button" data-act="approve">Одобрить план</button><button class="btn" type="button" data-act="replan">Переделать план</button></div>`;
+}
+
+function draftHtml(r){
+  const d = r.draft||{};
+  const hist = (r.fixes||[]).slice().reverse();
+  return `<div class="vwrap">${d.assetId?`<video controls playsinline preload="metadata" src="/_blob/${esc(d.assetId)}"></video>`:'<div class="empty">Черновик ещё не загружен</div>'}</div>
+    <div class="hint" style="text-align:center">Черновик v${esc(d.version||1)} в 1080p. Финал соберу в 4K 60 к/с.${d.note?'<br>'+esc(d.note):''}</div>
+    ${hist.length?`<div class="field"><h3>Прошлые правки</h3><ul class="hist">${hist.map(f=>`<li><span class="v">к v${esc(f.v)} · ${fmtDate(f.at)}</span><br>${esc(f.text)}</li>`).join('')}</ul></div>`:''}
+    ${r.status==='draft'?`<div class="field"><label for="fixText">Правки одним сообщением</label><textarea id="fixText" placeholder="Например: хук мельче, наклейку крема выше, на 0:12 вырезать «эээ»"></textarea></div>
+    <div class="row"><button class="btn primary" type="button" data-act="final">Всё супер, делай 4K</button><button class="btn" type="button" data-act="fix">Отправить правки</button></div>`:''}`;
+}
+
+function renderDetail(force){
+  const el = $('#detail');
+  if (creating){ if (!$('#newForm')) { el.innerHTML = newForm(); bindForm(); } return; }
+  const r = reels.find(x=>x.id===selected) || reels[0];
+  if (!r){ el.innerHTML=''; lastKey=''; return; }
+  selected = r.id;
+  const key = r.id+'|'+r.status+'|'+(r.updatedAt||0);
+  if (!force && key===lastKey) return;
+  lastKey = key;
+  let body = '';
+  if (r.status==='plan') body = planHtml(r);
+  else if (r.status==='draft' || r.status==='fixes' || r.status==='final_requested') body = draftHtml(r);
+  else if (r.status==='done') body = `<div class="note"><b>Ролик готов.</b> ${esc(r.final?.note||'Финал в 4K отправлен вам в чат.')}${r.final?.link?` <a href="${esc(r.final.link)}" target="_blank" rel="noopener">Открыть файл</a>`:''}</div>${draftHtml(r)}`;
+  const wait = WAIT_ME[r.status];
+  el.innerHTML = `<article class="card">
+    <div class="row between"><h2>${esc(r.title||'Без названия')}</h2>${pill(r)}</div>
+    ${stepsHtml(r)}
+    ${wait&&!r.example?`<div class="note"><b>${wait}.</b> ${r.status==='new'?'Посмотрю видео, предложу хуки и покажу, что вырежу.':r.status==='approved'?'Пришлю черновик в 1080p сюда же.':r.status==='fixes'?'Новая версия появится здесь.':'Пришлю файл в чат вместе с обложкой и подписью.'}</div>${pingHtml(r)}`:''}
+    ${body}
+    ${requestSummary(r)}
+    <div class="row"><button class="btn quiet" type="button" data-act="delete">${r.example?'Удалить пример':'Удалить ролик'}</button></div>
+  </article>`;
+}
+
+function render(){ renderList(); renderDetail(); }
+
+function bindForm(){
+  const f = $('#newForm');
+  f.addEventListener('change', e => { if (e.target.name==='how') $('#f-link').hidden = e.target.value!=='drive'; });
+  $('#cancelNew').onclick = () => { creating=false; lastKey=''; render(); };
+  f.addEventListener('submit', async e => {
+    e.preventDefault();
+    const title = $('#f-title').value.trim();
+    if (!title){ $('#f-title').focus(); toast('Назовите ролик'); return; }
+    const how = f.querySelector('input[name=how]:checked').value, link = $('#f-link').value.trim();
+    if (how==='drive' && !/^https?:\/\//.test(link)){ $('#f-link').focus(); toast('Вставьте ссылку на Google Диск'); return; }
+    const options = {}; Object.keys(OPTIONS).forEach(k=>options[k]=$('#f-opt-'+k).checked);
+    const now = Date.now();
+    const doc = {title, status:'new', createdAt:now, updatedAt:now, style:f.querySelector('input[name=style]:checked').value,
+      options, source:{how, link: how==='drive'?link:''}, hook:$('#f-hook').value.trim(), wishes:$('#f-wishes').value.trim(), fixes:[]};
+    const btn = f.querySelector('[type=submit]'); btn.disabled = true;
+    try { const ref = await db.collection('reels').add(doc); selected = ref.id; creating=false; lastKey=''; toast('Заявка в студии'); }
+    catch(err){ btn.disabled=false; toast(err.code==='invalid_argument'?'Сохранять может только владелец студии':'Не сохранилось, попробуйте ещё раз'); }
+  });
+}
+
+async function save(r, patch, msg){
+  try { await db.doc('reels/'+r.id).update({...patch, updatedAt:Date.now()}); delete local[r.id]; toast(msg); }
+  catch(err){ toast('Не сохранилось, попробуйте ещё раз'); }
+}
+
+document.addEventListener('click', async e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.id==='newBtn'){ if (!db){ toast('Студия ещё загружается'); return; } creating=true; render(); $('#f-title')?.focus(); return; }
+  if (t.dataset.id){ creating=false; selected=t.dataset.id; try{localStorage.setItem('studio.sel',selected)}catch(e){} lastKey=''; render(); return; }
+  if (t.dataset.copy){ try{ await navigator.clipboard.writeText(t.dataset.copy); toast('Скопировано'); }catch(err){ const c=t.previousElementSibling; const s=getSelection(); const rg=document.createRange(); rg.selectNodeContents(c); s.removeAllRanges(); s.addRange(rg); } return; }
+  const r = reels.find(x=>x.id===selected); if (!r) return;
+  if (t.dataset.cut!==undefined){ const L=local[r.id]; const l=L.lines[+t.dataset.cut]; l.cut=!l.cut; renderDetail(true); return; }
+  const act = t.dataset.act; if (!act) return;
+  if (act==='approve'){ const L=local[r.id]; await save(r, {status:'approved', plan:{...r.plan, lines:L.lines, hookPick:L.hookPick}, planComment:L.comment||''}, 'План одобрен'); }
+  if (act==='replan'){ const L=local[r.id]; if(!L.comment.trim()){ $('#planComment').focus(); toast('Напишите, что поменять'); return; } await save(r, {status:'new', plan:{...r.plan, lines:L.lines, hookPick:L.hookPick}, planComment:L.comment}, 'Отправила на переделку'); }
+  if (act==='fix'){ const text=$('#fixText').value.trim(); if(!text){ $('#fixText').focus(); toast('Напишите правки'); return; } await save(r, {status:'fixes', fixes:[...(r.fixes||[]), {v:r.draft?.version||1, text, at:Date.now()}]}, 'Правки отправлены'); }
+  if (act==='final'){ await save(r, {status:'final_requested'}, 'Собираю финал'); }
+  if (act==='delete'){
+    if (t.dataset.confirm!=='1'){ t.dataset.confirm='1'; t.textContent='Точно удалить? Нажмите ещё раз'; setTimeout(()=>{ if(t.isConnected){ t.dataset.confirm=''; t.textContent=r.example?'Удалить пример':'Удалить ролик'; } },4000); return; }
+    try { await db.doc('reels/'+r.id).delete(); selected=null; lastKey=''; toast('Удалено'); } catch(err){ toast('Не удалилось'); }
+  }
+});
+document.addEventListener('input', e => {
+  const r = reels.find(x=>x.id===selected); if (!r || !local[r.id]) return;
+  if (e.target.dataset.line!==undefined) local[r.id].lines[+e.target.dataset.line].text = e.target.value;
+  if (e.target.id==='planComment') local[r.id].comment = e.target.value;
+  if (e.target.name==='hookPick') local[r.id].hookPick = +e.target.value;
+});
+document.addEventListener('change', e => { const r=reels.find(x=>x.id===selected); if (r && local[r.id] && e.target.name==='hookPick') local[r.id].hookPick=+e.target.value; });
+
+(async () => {
+  const timer = setTimeout(()=>{ const l=$('#loading'); if(l) l.textContent='Студия пока не отвечает. Откройте страницу в Claude, войдя в свой аккаунт.'; }, 10000);
+  db = await claude.use('db');
+  if (!db){ clearTimeout(timer); $('#list').innerHTML='<div class="empty">Студия работает, только когда вы вошли в Claude. Откройте страницу в приложении или на claude.ai.</div>'; $('#newBtn').disabled=true; return; }
+  db.collection('reels').orderBy('createdAt','desc').limit(100).onSnapshot(snap => {
+    if (!snap.metadata.fromCache) clearTimeout(timer);
+    reels = snap.docs.map(d=>({id:d.id, ...d.data()}));
+    render();
+  }, err => { clearTimeout(timer); $('#list').innerHTML='<div class="empty">Не удалось загрузить ролики. Обновите страницу.</div>'; });
+})();
+</script>

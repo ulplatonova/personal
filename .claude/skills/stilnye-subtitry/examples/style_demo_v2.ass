@@ -1,0 +1,18 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: T,PlayfairUGC,215,&H0080CDEB,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,52,100,-2,0,1,0,0,8,20,20,0,1
+Style: S,InterTightUGC,54,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,40,40,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:05.00,T,,0,0,0,,{\an8\pos(540,250)\1c&H9FDDF2&\3c&H70B8E0&}НЕОЖИДАННЫЕ
+Dialogue: 0,0:00:00.00,0:00:05.00,T,,0,0,0,,{\an8\pos(540,560)\1c&H9FDDF2&}ОТКРЫТИЯ
+Dialogue: 0,0:00:05.00,0:00:10.00,S,,0,0,0,,{\an7\pos(150,380)\1c&H000000&\1a&HA8&\blur6\fsp-1}ему нужно чистить {\fnInterTightUGCItalic}зубы\N{\fnInterTightUGC}почти каждый день
+Dialogue: 1,0:00:05.00,0:00:10.00,S,,0,0,0,,{\an7\pos(148,377)\fsp-1}ему нужно чистить {\fnInterTightUGCItalic}зубы\N{\fnInterTightUGC\1c&HBEE3EF&}почти каждый день

@@ -1,0 +1,21 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: T,Oranienbaum,170,&H00A6C9F5,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,70,100,0,0,1,0,2,8,40,40,0,1
+Style: S,InterTightUGC,44,&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,0,0,0,0,100,100,0,0,1,0,1,8,40,40,0,1
+Style: N,Caveat,210,&H00F0F0F0,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,40,40,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:05.00,T,,0,0,0,,{\an8\pos(540,250)}САМЫЕ
+Dialogue: 0,0:00:00.00,0:00:05.00,T,,0,0,0,,{\an8\pos(540,415)}НЕОЖИДАННЫЕ
+Dialogue: 0,0:00:00.00,0:00:05.00,T,,0,0,0,,{\an8\pos(540,580)\1c&HBEE3EF&}ОТКРЫТИЯ
+Dialogue: 0,0:00:05.00,0:00:10.00,N,,0,0,0,,{\an8\pos(560,330)\alpha&H30&}1
+Dialogue: 1,0:00:05.00,0:00:10.00,S,,0,0,0,,{\an8\pos(540,420)\fsp-2}ему нужно {\fnInterTightUGCItalic\1c&HBEE3EF&}чистить {\fnInterTightUGC\fs66\1c&HA6C9F5&}зубы
+Dialogue: 1,0:00:05.00,0:00:10.00,S,,0,0,0,,{\an8\pos(540,490)\fsp-2}{\fnInterTightUGCItalic\1c&HBDBDBD&}почти {\fnInterTightUGC\1c&HFFFFFF&}каждый день

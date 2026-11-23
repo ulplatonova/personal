@@ -2,7 +2,7 @@ import json,os,subprocess,sys,re
 from PIL import Image,ImageDraw,ImageFilter
 K=float(os.environ.get('K','1')); FPS=os.environ.get('FPS','30'); OW,OH=int(1080*K),int(1920*K)
 W=[x for c in json.load(open('words.json'))['chunks'] for x in c['words']]
-END1=4.47
+END1=4.4986
 # фото: файл, центр, высота
 P=[('p4.jpg',(190,420),265),('p8.jpg',(885,430),250),('p3.jpg',(370,1295),300),('p6.jpg',(770,1240),310),('p2.jpg',(590,1390),310),('p1.jpg',(240,1500),295),('p7.jpg',(790,1505),330),('p5.jpg',(490,1600),245)]
 os.makedirs('cards',exist_ok=True); items=[]
@@ -59,7 +59,8 @@ out=sys.argv[1]; vargs=sys.argv[2].split('|')
 cmd=['ffmpeg','-nostdin','-v','error','-y','-i','source.mov']
 for p,*_ in items: cmd+=['-loop','1','-framerate',FPS,'-t',str(END1+0.2),'-i',p]
 Z=f"if(lt(it,{END1}),1.0+0.05*it/{END1},1.0)"
-fc=[f"[0:v]scale={OW}:{OH},fps={FPS},zoompan=z='{Z}':x='iw/2-iw/zoom/2':y='ih*0.35-ih/zoom*0.35':d=1:s={OW}x{OH}:fps={FPS},format=yuv420p[b0]"]
+RE="[0:v]split=4[r1][r2][r3][r4];[r1]trim=start=0:end=4.4986,setpts=PTS-STARTPTS[s1];[r2]trim=start=9.2320:end=11.5229,setpts=PTS-STARTPTS[s5];[r3]trim=start=4.4986:end=9.2320,setpts=PTS-STARTPTS[s2];[r4]trim=start=11.5229,setpts=PTS-STARTPTS[s6];[s1][s5][s2][s6]concat=n=4:v=1:a=0,"
+fc=[RE+f"scale={OW}:{OH},fps={FPS},zoompan=z='{Z}':x='iw/2-iw/zoom/2':y='ih*0.35-ih/zoom*0.35':d=1:s={OW}x{OH}:fps={FPS},format=yuv420p[b0]"]
 for n,(p,x,y) in enumerate(items,1):
     fc.append(f"[b{n-1}][{n}:v]overlay={x}:{y}:enable='lt(t,{END1})':eof_action=pass[b{n}]")
 pim=Image.open('stickers/pill.png'); pw,ph=int(pim.width*K),int(pim.height*K); pim.resize((pw,ph),Image.LANCZOS).save(f'cards/pill_{int(K)}.png')

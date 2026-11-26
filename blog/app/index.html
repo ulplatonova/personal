@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=Inter+Tight:wght@400;500;600&display=swap">
 <style>
-/* Layout: одна узкая колонка как в Telegram Mini App. Внизу четыре вкладки (План, Календарь, Идеи, Снято), поверх всего шторка редактирования.
+/* Layout: одна узкая колонка как в Telegram Mini App. Внизу пять вкладок (План, Календарь, Идеи, Снято, Бренд), поверх всего шторка редактирования.
    Цвета и шрифты взяты из blog/matrix/index.html, чтобы приложение выглядело как продолжение блога. */
 :root{
   --bg:#F9F9F9; --surface:#FFFFFF; --ink:#2B1214; --muted:#6B5F63; --line:#E3E0E1; --line-strong:#B9AFB2;
@@ -88,6 +88,22 @@ h1{font-family:var(--display);font-size:22px;line-height:1.15;letter-spacing:-.0
 .dots i.done{background:transparent;border:1.5px solid var(--muted)}
 .cal-day[aria-pressed="true"] .dots i{background:var(--on-accent)}
 .cal-day[aria-pressed="true"] .dots i.done{background:transparent;border-color:var(--on-accent)}
+.brand-hero{background:var(--accent);color:var(--on-accent);border-radius:14px;padding:18px 16px;display:flex;flex-direction:column;gap:10px}
+.brand-hero .kw{font-family:var(--display);font-size:15px;font-weight:600;line-height:1.4;margin:0}
+.brand-hero p{margin:0;font-size:15px;line-height:1.5}
+.accs{display:flex;flex-direction:column;gap:8px}
+details.acc{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+details.acc summary{list-style:none;cursor:pointer;padding:15px 16px;font-family:var(--display);font-weight:500;font-size:13px;display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:52px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"▾";color:var(--muted);font-size:13px;transition:transform .15s}
+details.acc[open] summary::after{transform:rotate(180deg)}
+.acc-body{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px;font-size:14.5px;line-height:1.5}
+.acc-body p{margin:0}
+.acc-body ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.acc-body .lbl{display:block;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:3px}
+.mix{display:flex;flex-direction:column;gap:10px}
+.mix-row{display:flex;flex-direction:column;gap:5px}
+.mix-row .meter-row{color:var(--ink);font-weight:500}
 .quick{display:flex;gap:8px}
 .quick input{flex:1;min-width:0}
 input[type=text],input[type=date],select,textarea{width:100%;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:11px 12px;min-height:44px}
@@ -98,9 +114,9 @@ textarea{min-height:160px;resize:vertical;line-height:1.5}
 .foot{display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding-top:6px}
 
 nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px));z-index:5}
-nav.tabs div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav.tabs div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
 nav.tabs button{background:none;border:0;padding:12px 6px 11px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:12.5px;font-weight:500;min-height:56px}
-nav.tabs button b{font-family:var(--display);font-weight:500;font-size:12px;color:inherit}
+nav.tabs button b{font-family:var(--display);font-weight:500;font-size:11px;color:inherit}
 nav.tabs button[aria-selected="true"]{color:var(--accent)}
 nav.tabs button[aria-selected="true"] b{font-weight:600}
 nav.tabs .count{font-size:11.5px;opacity:.85}
@@ -466,6 +482,63 @@ function viewCalendar() {
   return out;
 }
 
+/* Вкладка «Бренд»: сжатая версия Брендбука 2.0 (ноябрь 2026) и blog/01-positioning.md. Только чтение. */
+function viewBrand() {
+  const L = text => el('span', { class: 'lbl' }, text);
+  const sec = (label, body) => el('div', null, L(label), body);
+  const ul = items => el('ul', null, items.map(i => el('li', null, i)));
+  const acc = (title, ...kids) => el('details', { class: 'acc' }, el('summary', null, title), el('div', { class: 'acc-body' }, kids));
+  const mix = [['Стиль и красивые находки', 40, 'Ядро: одежда, фактуры, аксессуары, выбор, открытия'],
+    ['Досуг, интерьер и lifestyle', 20, 'Необычные идеи вечера, дом, поездки'],
+    ['Личность, мысли и юмор', 15, 'Истории, характер, наблюдения, своё мнение'],
+    ['Beauty и уход за собой', 15, 'Личный опыт: макияж, волосы, косметика, ароматы'],
+    ['Жизнь с Коди', 10, 'Собака как второстепенный герой, опыт и юмор']];
+  return [
+    el('div', { class: 'head' }, el('h1', null, 'Позиционирование')),
+    el('div', { class: 'brand-hero' },
+      el('p', { class: 'kw' }, 'Стиль. Характер. Вкус. Самоуважение.'),
+      el('p', null, 'Lifestyle-блог девушки с характером и собственным вкусом, которая делится стильными находками, красивыми идеями для повседневности и своим взглядом на жизнь: с юмором, уверенностью и без глянцевой идеальности.')),
+    el('p', { class: 'hint' }, 'Внутреннее название концепции: «Искусство быть собой». Это не слоган.'),
+    el('div', { class: 'accs' },
+      acc('Большая идея и роль',
+        sec('Большая идея', el('p', null, 'Красивую и интересную повседневную жизнь можно создавать самостоятельно, опираясь на собственный вкус и желания. Не нужно ждать особого случая, идеальной внешности или интерьера. Важны не статус и не глянец, а личный выбор.')),
+        sec('Кто она для аудитории', el('p', null, 'Подруга с хорошим вкусом, чьё мнение интересно спросить. Не стилист, не визажист, не психолог и не наставница по самооценке.')),
+        sec('Что обещает блог', el('p', null, 'Находить вещи и идеи, которые хочется забрать себе, получать эстетическое удовольствие и постепенно перенимать более свободное, уважительное отношение к себе.'))),
+      acc('Героиня и характер',
+        el('p', null, 'Не вымышленная маска, а усиленная версия реальной личности. Собранная, женственная, немного загадочная. В общении тёплая и живая.'),
+        ul(['Уверенность: спокойно выбирает, не оправдывается за вкус и желания', 'Самоуважение: сохраняет границы', 'Юмор: иронизирует над ситуациями и собой, без самоунижения', 'Теплота: общается на равных', 'Вкус: любит фактуры, детали, красивые вещи с характером', 'Самостоятельность: свои интересы, мнение, амбиции'])),
+      acc('О чём блог',
+        el('div', { class: 'mix' }, mix.map(([name, pct, note]) => el('div', { class: 'mix-row' },
+          el('div', { class: 'meter-row' }, el('span', null, name), el('span', null, pct + '%')),
+          el('div', { class: 'bar' }, el('i', { style: 'width:' + pct + '%' })),
+          el('span', { class: 'hint' }, note)))),
+        el('p', { class: 'hint' }, 'Проценты — гипотеза для проверки, не обязательство.'),
+        sec('Смысловое ядро', el('p', null, 'Стиль и отбор интересного. Не «всё, что мне нравится» без контекста: у каждой находки есть повод остановиться, сохранить, обсудить или попробовать.')),
+        sec('Работа маркетологом', el('p', null, 'Естественная деталь жизни. Не обучение маркетологов, не разборы собственных рилс, не профессиональный контент по умолчанию.'))),
+      acc('Что должно считываться',
+        ul(['Первое видео: «Какая стильная и интересная девушка»', 'Несколько видео: «У неё хороший вкус, интересно, что ещё покажет»', 'Подписка: «Она прикольная, мне близко, как она рассуждает»', 'Лояльность: «Доверяю её рекомендациям и хочу перенять некоторые привычки»']),
+        sec('Чем отличается от типичного lifestyle', ul(['Не просто вещи: почему вещь зацепила, что в ней необычного', 'Не тренд ради тренда: фильтрует популярное через свой вкус', 'Не идеальная картинка: обычные ситуации, смешные истории, честный опыт', 'Не учитель: рассказывает, как выбирает жить сама, а не как надо всем']))),
+      acc('Голос',
+        el('p', null, 'Уверенная подруга с хорошим чувством юмора и собственным мнением.'),
+        ul(['Дружеский: на равных, без уменьшительно-ласкательной милоты', 'Уверенный: прямо формулирует мнение, без высокомерия', 'Ироничный: наблюдения и самоирония без грубости', 'Разговорный: фразы, которые реально можно произнести', 'Сдержанно личный: не выставлять всю жизнь напоказ']),
+        sec('Не используем', el('p', null, 'Искусственную дерзость, сексуализацию, похабщину, инфантильность, клише про женскую энергию, мотивационные лозунги, слишком «нейросетевые» и поэтичные конструкции.'))),
+      acc('Визуал',
+        el('p', null, 'Dark Feminine × Vintage × 90s Minimalism.'),
+        sec('Цвета', el('p', null, 'Чёрный, графит, шоколад, сливочный, тауп, серебро, винный.')),
+        sec('Свет и картинка', el('p', null, 'Фактуры, натуральный свет и кожа, вспышка, слегка янтарный фон. Без яркого Creative Editorial Lifestyle и чрезмерного оранжевого света.')),
+        sec('Фирменная деталь', el('p', null, 'Тактильность: кружево, мех, кожа, замша, кашемир, шёлк. Снимать крупно: воротник, манжеты, украшения, движение материала.'))),
+      acc('Границы',
+        sec('Не показываем', ul(['Личную жизнь (отношения)', 'Обнажённое тело', 'Чужое личное без согласия'])),
+        sec('Не делаем', ul(['Блог только про маркетинг или работу', 'Обязательные походы по местам', 'Скетчи (пока)', 'Постоянные рубрики про отношения, семью и работу'])),
+        el('p', null, 'Не нужно играть непоколебимую уверенность: путь, эксперименты, сомнения и выводы показывать можно.')),
+      acc('Площадки и цель',
+        sec('Instagram', el('p', null, 'Витрина и рост: рилсы с вещами, жизнью, Коди и мнениями. Чистая картинка, голос.')),
+        sec('Telegram «ulya\'s days»', el('p', null, 'Близость и доверие: живые дни, закулисье, мысли. Основная реклама идёт сюда.')),
+        sec('Цель на год', el('p', null, 'Сотрудничество с брендами и подарки, плюс личный бренд и удовольствие. Маркетинг виден в том, как она выбирает и объясняет вещи, а не в ярлыке.')))),
+    el('p', { class: 'hint' }, 'Источник: Брендбук 2.0 (ноябрь 2026) и blog/01-positioning.md. Полная версия в PDF.')
+  ];
+}
+
 function viewIdeas() {
   const input = el('input', { type: 'text', id: 'quick', placeholder: 'Тезис идеи одной строкой', autocomplete: 'off' });
   const add = () => {
@@ -517,15 +590,15 @@ function footer() {
 
 function render() {
   const app = document.getElementById('app');
-  const view = S.tab === 'plan' ? viewPlan() : S.tab === 'cal' ? viewCalendar() : S.tab === 'ideas' ? viewIdeas() : viewDone();
+  const view = S.tab === 'plan' ? viewPlan() : S.tab === 'cal' ? viewCalendar() : S.tab === 'ideas' ? viewIdeas() : S.tab === 'brand' ? viewBrand() : viewDone();
   const keep = document.activeElement && document.activeElement.id === 'quick' ? document.activeElement.value : null;
-  app.replaceChildren(...view, footer());
+  app.replaceChildren(...view, ...(S.tab === 'brand' ? [] : [footer()]));
   if (keep) { const q = document.getElementById('quick'); if (q) q.value = keep; }
-  const tabs = [['plan', 'План', S.items.filter(i => !i.done).length], ['cal', 'Календарь', '\u00a0'], ['ideas', 'Идеи', S.ideas.length], ['done', 'Снято', S.items.filter(i => i.done).length]];
+  const tabs = [['plan', 'План', S.items.filter(i => !i.done).length], ['cal', 'Календарь', '\u00a0'], ['ideas', 'Идеи', S.ideas.length], ['done', 'Снято', S.items.filter(i => i.done).length], ['brand', 'Бренд', '\u00a0']];
   document.getElementById('tabs').replaceChildren(...tabs.map(([k, name, n]) =>
     el('button', { type: 'button', role: 'tab', 'aria-selected': String(S.tab === k), onclick: () => { S.tab = k; render(); window.scrollTo(0, 0); } },
       el('b', null, name), el('span', { class: 'count' }, String(n)))));
-  document.getElementById('fab').hidden = S.tab === 'done';
+  document.getElementById('fab').hidden = S.tab === 'done' || S.tab === 'brand';
 }
 
 document.getElementById('fab').addEventListener('click', () => {

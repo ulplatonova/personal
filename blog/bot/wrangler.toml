@@ -1,0 +1,21 @@
+# Бот и приложение «Контент-план Ульяны» на Cloudflare Workers.
+# Подробности запуска: ../app/INSTRUCTION.md
+name = "ulya-plan"
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+
+# Приложение (public/) отдаётся через Worker: закрытые файлы (public/private/)
+# выдаются только после проверки подписи Telegram.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ulya-plan"
+database_id = "ВСТАВЬТЕ_СЮДА_database_id_ИЗ_ОТВЕТА_wrangler_d1_create"
+
+# Секреты (не в этом файле): BOT_TOKEN, ALLOWED_USER_ID
+# npx wrangler secret put BOT_TOKEN
+# npx wrangler secret put ALLOWED_USER_ID

@@ -23,7 +23,8 @@ button{cursor:pointer}
 h1{font-family:var(--display);font-size:32px;line-height:1.1;letter-spacing:-.01em;font-weight:400;margin:0;text-wrap:balance}
 .head{display:flex;flex-direction:column;gap:12px}
 .head-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.today{color:var(--muted);font-family:var(--display);font-style:italic;font-size:16px;white-space:nowrap}
+.today{color:var(--muted);font-size:15px;white-space:nowrap}
+em{font-family:var(--display);font-style:italic;font-weight:400}
 .next{margin:0;padding:12px 14px;border-radius:12px;background:var(--accent-soft);font-size:14px;min-width:0;overflow-wrap:anywhere}
 .next b{font-weight:600}
 .meter{display:flex;flex-direction:column;gap:6px}
@@ -55,7 +56,7 @@ h1{font-family:var(--display);font-size:32px;line-height:1.1;letter-spacing:-.01
 .facts dd{margin:0;min-width:0;overflow-wrap:anywhere}
 .script-label{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .script{margin:4px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:16px;line-height:1.55;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
-.script.empty{color:var(--muted);font-style:italic}
+.script.empty{color:var(--muted)}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
 .btn{border:1px solid var(--line-strong);background:transparent;border-radius:999px;padding:9px 16px;font-size:15px;font-weight:500;min-height:40px}
 .btn:hover{border-color:var(--accent)}
@@ -82,7 +83,7 @@ h1{font-family:var(--display);font-size:32px;line-height:1.1;letter-spacing:-.01
 .cal-day[aria-pressed="true"] .dots i.done{background:transparent;border-color:var(--on-accent)}
 .brand-hero{color:var(--ink);border-left:2px solid var(--accent);padding:4px 0 4px 16px;display:flex;flex-direction:column;gap:12px}
 .brand-hero .kw{font-family:var(--display);font-size:27px;font-weight:400;line-height:1.25;margin:0}
-.brand-hero p{margin:0;font-family:var(--display);font-style:italic;font-size:18.5px;line-height:1.5}
+.brand-hero p{margin:0;font-size:16.5px;line-height:1.55}
 .accs{display:flex;flex-direction:column;gap:8px}
 details.acc{background:var(--surface);border:1px solid var(--line);border-radius:14px}
 details.acc summary{list-style:none;cursor:pointer;padding:15px 16px;font-family:var(--display);font-weight:400;font-size:21px;display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:56px}
@@ -96,15 +97,23 @@ details.acc[open] summary::after{transform:rotate(180deg)}
 .mix{display:flex;flex-direction:column;gap:10px}
 .mix-row{display:flex;flex-direction:column;gap:5px}
 .mix-row .meter-row{color:var(--ink);font-weight:500}
+.gal-label{margin:0;font-family:var(--display);font-size:21px}
+.gal-group{display:flex;flex-direction:column;gap:10px}
+.gal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.gal-grid button{padding:0;border:0;background:none;display:flex;flex-direction:column;gap:6px;text-align:left}
+.gal-grid img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;display:block;background:var(--surface)}
+.gal-grid span{font-size:14px;color:var(--muted)}
+.photo-big{margin:0;max-width:min(92vw,520px);display:flex;flex-direction:column;gap:10px;align-items:center}
+.photo-big img{max-width:100%;max-height:78vh;border-radius:12px;display:block}
+.photo-big figcaption{color:var(--ink);font-size:15px}
 .topbar{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--accent);padding-bottom:10px;border-bottom:1px solid var(--line-strong)}
 .quick{display:flex;gap:8px}
 .quick input{flex:1;min-width:0}
 input[type=text],input[type=date],select,textarea{width:100%;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:11px 12px;min-height:44px}
 textarea{min-height:160px;resize:vertical;line-height:1.5}
 .hint{margin:0;color:var(--muted);font-size:14.5px}
-.head .hint{font-family:var(--display);font-style:italic;font-size:17px}
 .empty-state{padding:28px 18px;text-align:center;color:var(--muted);font-size:15.5px;background:var(--surface);border:1px dashed var(--line-strong);border-radius:14px}
-.empty-state b{display:block;color:var(--ink);margin-bottom:6px;font-family:var(--display);font-style:italic;font-weight:400;font-size:22px}
+.empty-state b{display:block;color:var(--ink);margin-bottom:6px;font-family:var(--display);font-weight:400;font-size:22px}
 .foot{display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding-top:6px}
 
 nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px));z-index:5}
@@ -150,7 +159,7 @@ nav.tabs .count{font-size:12.5px;opacity:.85}
 const KEY = 'ulya-plan-v2';
 const KINDS = ['Рилс', 'Пост'];
 const FORMATS = ['Закадровый голос', 'Говорю в камеру', 'Примерка / распаковка', 'Процесс', 'Эстетика без слов'];
-const SERIES = ['Собираюсь', 'Подарки', 'Покупки', 'Коди'];
+const SERIES = ['Фэшн', 'Бьюти', 'Личное', 'Коди', 'Другое']; // рубрики (в данных поле series)
 const WD = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 const WD_LONG = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
 const MON = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
@@ -173,6 +182,7 @@ const store = {
 };
 
 const loaded = store.load();
+[...(loaded ? loaded.items : [])].forEach(i => { if (i.series && !SERIES.includes(i.series)) i.series = ''; });
 const S = { items: loaded ? loaded.items : seed().items, ideas: loaded ? loaded.ideas : seed().ideas, tab: 'plan', open: null };
 const persist = () => store.save(S);
 
@@ -243,7 +253,7 @@ function itemSheet(item, opts = {}) {
     date: el('input', { type: 'date', id: 'f-date', value: item.date || '' }),
     kind: select('f-kind', KINDS, item.kind || 'Рилс', ''),
     format: select('f-format', FORMATS, item.format, 'Не выбран'),
-    series: select('f-series', SERIES, item.series, 'Без серии'),
+    series: select('f-series', SERIES, item.series, 'Без рубрики'),
     script: el('textarea', { id: 'f-script', placeholder: 'Опорные точки и примеры фраз. Не текст для заучивания.' })
   };
   f.kind.querySelector('option[value=""]').remove();
@@ -262,7 +272,7 @@ function itemSheet(item, opts = {}) {
     el('h2', null, isNew ? 'Новая тема в плане' : 'Правка темы'),
     field('f-title', 'Тема', f.title), err,
     el('div', { class: 'two' }, field('f-date', 'Когда', f.date), field('f-kind', 'Что это', f.kind)),
-    el('div', { class: 'two' }, field('f-format', 'Формат', f.format), field('f-series', 'Серия', f.series)),
+    el('div', { class: 'two' }, field('f-format', 'Формат', f.format), field('f-series', 'Рубрика', f.series)),
     field('f-script', 'Сценарий и заметки', f.script),
     el('div', { class: 'sheet-actions' },
       !isNew ? el('button', { class: 'btn danger', type: 'button', onclick: () => { closeSheet(); removeItem(item.id); } }, 'Удалить') : el('span'),
@@ -395,13 +405,13 @@ function viewPlan() {
   const t = today();
   const total = S.items.length, done = S.items.filter(i => i.done).length;
   out.push(el('div', { class: 'head' },
-    el('div', { class: 'head-top' }, el('h1', null, 'Контент-план'), el('span', { class: 'today' }, WD_LONG[t.getDay()] + ', ' + t.getDate() + ' ' + MON_LONG[t.getMonth()])),
+    el('div', { class: 'head-top' }, el('h1', null, 'Контент-план'), el('span', { class: 'today' }, el('em', null, WD_LONG[t.getDay()]), ', ' + t.getDate() + ' ' + MON_LONG[t.getMonth()])),
     el('div', { class: 'meter' },
       el('div', { class: 'meter-row' }, el('span', null, 'Снято'), el('span', null, done + ' из ' + total)),
       el('div', { class: 'bar' }, el('i', { style: 'width:' + (total ? Math.round(done / total * 100) : 0) + '%' })))));
 
   if (!openItems.length) {
-    out.push(el('div', { class: 'empty-state' }, el('b', null, 'В плане пока пусто'), 'Нажмите + и впишите первую тему. Или начните с вкладки «Идеи».'));
+    out.push(el('div', { class: 'empty-state' }, el('b', null, 'В плане пока ', el('em', null, 'пусто')), 'Нажмите + и впишите первую тему. Или начните с вкладки «Идеи».'));
     return out;
   }
   const groups = new Map();
@@ -460,7 +470,7 @@ function viewCalendar() {
 
   const out = [
     el('div', { class: 'cal-head' },
-      el('h1', null, MON_NOM[m] + ' ' + y),
+      el('h1', null, MON_NOM[m] + ' ', el('em', null, String(y))),
       el('div', { class: 'cal-nav' },
         el('button', { type: 'button', 'aria-label': 'Прошлый месяц', onclick: () => shift(-1) }, '‹'),
         el('button', { type: 'button', style: 'width:auto;padding:0 12px;font-size:13px', onclick: goToday }, 'Сегодня'),
@@ -479,6 +489,28 @@ function viewCalendar() {
   return out;
 }
 
+const GALLERY = [
+  ['Мои кадры', [['own-1', 'Водолазка и брюки'], ['own-2', 'Портрет'], ['own-3', 'Мех, рубашка и брюки'], ['own-4', 'Кресло, вспышка, винтаж']]],
+  ['Dark Feminine и винтаж', [['style-1', 'Костюм и мех'], ['style-2', 'Серебро и чёрный камень'], ['style-3', 'Кружево и камерный интерьер'], ['style-4', 'Тёплый свет в интерьере'], ['style-5', 'Объёмная укладка'], ['style-6', 'Винная сумка и остроносые туфли']]],
+  ['Красота повседневности', [['daily-1', 'Камерный ужин'], ['daily-2', 'Книжное пространство'], ['daily-3', 'Винтажный рынок']]],
+  ['На кого смотреть', [['ref-1', 'Лили-Роуз Депп'], ['ref-2', 'Роузи Хантингтон-Уайтли'], ['ref-3', 'Камиль Роу'], ['ref-4', 'Кейт Мосс']]],
+  ['Бренды для насмотренности', [['brand-1', 'Saint Laurent'], ['brand-2', 'The Row'], ['brand-3', 'Khaite']]]
+];
+function showPhoto(src, cap) {
+  const scrim = el('div', { class: 'scrim', style: 'align-items:center', onclick: closeSheet },
+    el('figure', { class: 'photo-big' }, el('img', { src, alt: cap }), el('figcaption', null, cap)));
+  document.getElementById('layer').replaceChildren(scrim);
+  document.addEventListener('keydown', escClose);
+}
+function gallery() {
+  return el('section', { class: 'week', style: 'gap:16px' },
+    el('h2', null, el('span', null, 'Фото для вдохновения')),
+    GALLERY.map(([name, photos]) => el('div', { class: 'gal-group' },
+      el('p', { class: 'gal-label' }, name),
+      el('div', { class: 'gal-grid' }, photos.map(([f, cap]) => el('button', { type: 'button', onclick: () => showPhoto('img/' + f + '.jpg', cap) },
+        el('img', { src: 'img/' + f + '.jpg', alt: cap, loading: 'lazy' }), el('span', null, cap)))))));
+}
+
 /* Вкладка «Бренд»: сжатая версия Брендбука 2.0 (ноябрь 2026) и blog/01-positioning.md. Только чтение. */
 function viewBrand() {
   const L = text => el('span', { class: 'lbl' }, text);
@@ -493,7 +525,7 @@ function viewBrand() {
   return [
     el('div', { class: 'head' }, el('h1', null, 'Позиционирование')),
     el('div', { class: 'brand-hero' },
-      el('p', { class: 'kw' }, 'Стиль. Характер. Вкус. Самоуважение.'),
+      el('p', { class: 'kw' }, 'Стиль. Характер. Вкус. ', el('em', null, 'Самоуважение.')),
       el('p', null, 'Lifestyle-блог девушки с характером и собственным вкусом, которая делится стильными находками, красивыми идеями для повседневности и своим взглядом на жизнь: с юмором, уверенностью и без глянцевой идеальности.')),
     el('p', { class: 'hint' }, 'Внутреннее название концепции: «Искусство быть собой». Это не слоган.'),
     el('div', { class: 'accs' },
@@ -532,6 +564,7 @@ function viewBrand() {
         sec('Instagram', el('p', null, 'Витрина и рост: рилсы с вещами, жизнью, Коди и мнениями. Чистая картинка, голос.')),
         sec('Telegram «ulya\'s days»', el('p', null, 'Близость и доверие: живые дни, закулисье, мысли. Основная реклама идёт сюда.')),
         sec('Цель на год', el('p', null, 'Сотрудничество с брендами и подарки, плюс личный бренд и удовольствие. Маркетинг виден в том, как она выбирает и объясняет вещи, а не в ярлыке.')))),
+    gallery(),
     el('p', { class: 'hint' }, 'Источник: Брендбук 2.0 (ноябрь 2026) и blog/01-positioning.md. Полная версия в PDF.')
   ];
 }
@@ -551,7 +584,7 @@ function viewIdeas() {
       el('p', { class: 'hint' }, 'В боте то же самое: пишете ему сообщение, и оно появляется здесь.'))
   ];
   if (!S.ideas.length) {
-    out.push(el('div', { class: 'empty-state' }, el('b', null, 'Идей пока нет'), 'Впишите первую в строку выше.'));
+    out.push(el('div', { class: 'empty-state' }, el('b', null, 'Идей пока ', el('em', null, 'нет')), 'Впишите первую в строку выше.'));
     return out;
   }
   out.push(el('div', { class: 'list' }, S.ideas.map(idea => el('article', { class: 'row' },
@@ -569,7 +602,7 @@ function viewIdeas() {
 function viewDone() {
   const items = S.items.filter(i => i.done).sort((a, b) => byDate(b, a));
   const out = [el('div', { class: 'head' }, el('h1', null, 'Снято'), el('p', { class: 'hint' }, 'Отметьте круг ещё раз, и тема вернётся в план.'))];
-  if (!items.length) { out.push(el('div', { class: 'empty-state' }, el('b', null, 'Пока ничего не отмечено'), 'Снятое из плана окажется здесь.')); return out; }
+  if (!items.length) { out.push(el('div', { class: 'empty-state' }, el('b', null, 'Пока ничего не ', el('em', null, 'отмечено')), 'Снятое из плана окажется здесь.')); return out; }
   out.push(el('div', { class: 'list' }, items.map(i => rowEl(i, 'done'))));
   return out;
 }

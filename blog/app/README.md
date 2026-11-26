@@ -35,7 +35,7 @@ Mini App (index.html) ──fetch──────▶ API ───────
 ## Данные
 
 ```
-items: id, title, kind (Рилс|Пост), date, format, series, script, done, created_at, updated_at
+items: id, title, kind (Рилс|Пост), date, format, series (рубрика), script, done, created_at, updated_at
 ideas: id, title, note, added
 ```
 Поля совпадают с объектами в прототипе, переписывать интерфейс не придётся.
@@ -57,3 +57,6 @@ ideas: id, title, note, added
 
 ## Шрифты
 Inter (текст) и Playfair Display (заголовки, курсив для акцентов), файлы от Ульяны, лицензия OFL. В `index.html` встроены как base64 woff2 (кириллица и латиница), копии в `fonts/`.
+
+## Фото
+Во вкладке «Бренд» 20 фото для вдохновения из брендбука 2.0, лежат в `img/` и публикуются рядом со страницей.

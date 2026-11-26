@@ -2,23 +2,23 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=Inter+Tight:wght@400;500;600&display=swap">
 <style>
-/* Layout: одна узкая колонка как в Telegram Mini App. Внизу три вкладки (План, Идеи, Снято), поверх всего шторка редактирования.
-   Палитра Ульяны (26.11): 70% основные, 25% дополнительные, 5% акцентные. Шрифты из blog/matrix/index.html. */
+/* Layout: одна узкая колонка как в Telegram Mini App. Внизу четыре вкладки (План, Календарь, Идеи, Снято), поверх всего шторка редактирования.
+   Цвета и шрифты взяты из blog/matrix/index.html, чтобы приложение выглядело как продолжение блога. */
 :root{
-  --bg:#DDD6CC; --surface:#E8E3DB; --ink:#1D1C1E; --muted:#53433B; --line:#C6BDB2; --line-strong:#978B80;
-  --accent:#5E2430; --on-accent:#E8E3DB; --accent-soft:#CDBFBC; --blue:#1D1C1E; --blue-soft:#8496A7;
-  --warn:#8F313B; --track:#C6BDB2; --scrim:rgba(29,28,30,.45);
+  --bg:#F9F9F9; --surface:#FFFFFF; --ink:#2B1214; --muted:#6B5F63; --line:#E3E0E1; --line-strong:#B9AFB2;
+  --accent:#681A1D; --on-accent:#F9F9F9; --accent-soft:#F1E4E4; --blue:#3F5670; --blue-soft:#E4EAF0;
+  --warn:#9B2C2C; --track:#E9E5E6; --scrim:rgba(23,12,14,.45);
   --font:"Inter Tight","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --display:"Unbounded","Inter Tight",system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1D1C1E; --surface:#28272A; --ink:#DDD6CC; --muted:#A2A1A0; --line:#414145; --line-strong:#5C5B60;
-  --accent:#B28350; --on-accent:#1D1C1E; --accent-soft:#53433B; --blue:#A9B7C4; --blue-soft:#3A3F46;
-  --warn:#E0868D; --track:#414145; --scrim:rgba(0,0,0,.6); color-scheme:dark}}
+  --bg:#170C0E; --surface:#231316; --ink:#F2EAEA; --muted:#B3A3A6; --line:#3D2A2D; --line-strong:#6B5A5D;
+  --accent:#E6A3A7; --on-accent:#170C0E; --accent-soft:#3A1F22; --blue:#A9BCD0; --blue-soft:#2A3440;
+  --warn:#F0A0A0; --track:#3D2A2D; --scrim:rgba(0,0,0,.6); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#1D1C1E; --surface:#28272A; --ink:#DDD6CC; --muted:#A2A1A0; --line:#414145; --line-strong:#5C5B60;
-  --accent:#B28350; --on-accent:#1D1C1E; --accent-soft:#53433B; --blue:#A9B7C4; --blue-soft:#3A3F46;
-  --warn:#E0868D; --track:#414145; --scrim:rgba(0,0,0,.6); color-scheme:dark}
+  --bg:#170C0E; --surface:#231316; --ink:#F2EAEA; --muted:#B3A3A6; --line:#3D2A2D; --line-strong:#6B5A5D;
+  --accent:#E6A3A7; --on-accent:#170C0E; --accent-soft:#3A1F22; --blue:#A9BCD0; --blue-soft:#2A3440;
+  --warn:#F0A0A0; --track:#3D2A2D; --scrim:rgba(0,0,0,.6); color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;
@@ -72,6 +72,22 @@ h1{font-family:var(--display);font-size:22px;line-height:1.15;letter-spacing:-.0
 .btn.ghost{border-color:transparent;color:var(--muted)}
 .row.done .title{text-decoration:line-through;color:var(--muted)}
 
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cal-nav{display:flex;gap:6px}
+.cal-nav button{min-width:40px;height:40px;border-radius:99px;border:1px solid var(--line-strong);background:transparent;font-size:18px;line-height:1}
+.cal{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-wd{font-size:11.5px;color:var(--muted);text-align:center;padding:4px 0}
+.cal-day{min-width:0;height:54px;border:0;background:transparent;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:9px;font-size:14.5px}
+.cal-day.out{opacity:.4}
+.cal-day.today .n{color:var(--accent);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.cal-day[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.cal-day[aria-pressed="true"] .n{color:var(--on-accent)}
+.dots{display:flex;gap:3px;height:6px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.dots i.done{background:transparent;border:1.5px solid var(--muted)}
+.cal-day[aria-pressed="true"] .dots i{background:var(--on-accent)}
+.cal-day[aria-pressed="true"] .dots i.done{background:transparent;border-color:var(--on-accent)}
 .quick{display:flex;gap:8px}
 .quick input{flex:1;min-width:0}
 input[type=text],input[type=date],select,textarea{width:100%;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:11px 12px;min-height:44px}
@@ -82,7 +98,7 @@ textarea{min-height:160px;resize:vertical;line-height:1.5}
 .foot{display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding-top:6px}
 
 nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px));z-index:5}
-nav.tabs div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+nav.tabs div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
 nav.tabs button{background:none;border:0;padding:12px 6px 11px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:12.5px;font-weight:500;min-height:56px}
 nav.tabs button b{font-family:var(--display);font-weight:500;font-size:12px;color:inherit}
 nav.tabs button[aria-selected="true"]{color:var(--accent)}
@@ -118,10 +134,9 @@ nav.tabs .count{font-size:11.5px;opacity:.85}
 
 <script>
 /* ---------- Данные ---------- */
-const KEY = 'ulya-plan-v1';
+const KEY = 'ulya-plan-v2';
 const KINDS = ['Рилс', 'Пост'];
 const FORMATS = ['Закадровый голос', 'Говорю в камеру', 'Примерка / распаковка', 'Процесс', 'Эстетика без слов'];
-const HOWS = ['На штатив', 'С рук', 'С рук + голос потом'];
 const SERIES = ['Собираюсь', 'Подарки', 'Покупки', 'Коди'];
 const WD = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 const WD_LONG = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
@@ -131,37 +146,8 @@ const MON_LONG = ['января', 'февраля', 'марта', 'апреля'
 let uid = 0;
 const newId = () => 'i' + Date.now().toString(36) + (uid++).toString(36);
 
-/* Тема, пример. Взято из blog/06-content-plan.md (недели 3 и 4) и blog/07-content-matrix.md. */
-function seed() {
-  const it = (date, title, format, how, series, script) =>
-    ({ id: newId(), title, kind: 'Рилс', date, format, how, series, script, done: false });
-  return {
-    items: [
-      it('2026-11-23', 'Подарки, часть 2', 'Говорю в камеру', 'На штатив', 'Подарки',
-        'По комментариям к части 1: например, подарки подруге или до определённой суммы. Как часть 1: фото вещей поверх кадра.'),
-      it('2026-11-25', 'Собирайся со мной #2', 'Говорю в камеру', 'На штатив', 'Собираюсь',
-        'Серия продолжается: другой образ, тот же формат.'),
-      it('2026-11-27', 'Что есть у Коди и что реально пригодилось', 'Закадровый голос', 'С рук + голос потом', 'Коди',
-        'Вещи для собаки, красивые и полезные. Портфолио для брендов товаров для животных.'),
-      it('2026-11-29', 'История про характер', 'Говорю в камеру', 'На штатив', '',
-        'Реальный случай: как отстояла своё, договорилась или научилась говорить «нет». [Какой именно случай — впишите сами]'),
-      it('2026-11-30', 'Подарки, часть 3: красиво упаковать', 'Процесс', 'С рук + голос потом', 'Подарки',
-        'Упаковка подарков: польза и эстетика.'),
-      it('2026-12-02', 'Готовлю дом к Новому году', 'Закадровый голос', 'С рук + голос потом', '',
-        'Декор, свет, мелочи, где взяла.'),
-      it('2026-12-04', 'Что купила за ноябрь', 'Примерка / распаковка', '', 'Покупки',
-        'Итоги месяца, связка с постом в Telegram.'),
-      it('2026-12-06', 'Отвечаю на ваши вопросы', 'Говорю в камеру', 'На штатив', '',
-        'Самые частые вопросы из комментариев и сторис за месяц.')
-    ],
-    ideas: [
-      { id: newId(), title: 'Как я продаю вещи на Авито глазами маркетолога', note: 'Из матрицы, приоритет 2.', added: '2026-11-26' },
-      { id: newId(), title: 'Блокнот за 300 ₽ и за 3000 ₽: есть ли разница', note: 'Из матрицы, приоритет 3.', added: '2026-11-26' },
-      { id: newId(), title: 'Рандомные вещи, которые меня вдохновляют', note: 'Серия: каждая вещь отдельным роликом.', added: '2026-11-26' },
-      { id: newId(), title: 'Коди опять ходит на задних лапах', note: '', added: '2026-11-26' }
-    ]
-  };
-}
+/* Начинаем с пустого списка: темы Ульяна вносит сама. */
+function seed() { return { items: [], ideas: [] }; }
 
 /* Хранилище. Сейчас localStorage в этом браузере.
    В боте этот слой заменяется на запросы к API (см. app/README.md): load() станет GET /api/plan, save() станет PUT по отдельной записи. */
@@ -244,7 +230,6 @@ function itemSheet(item, opts = {}) {
     date: el('input', { type: 'date', id: 'f-date', value: item.date || '' }),
     kind: select('f-kind', KINDS, item.kind || 'Рилс', ''),
     format: select('f-format', FORMATS, item.format, 'Не выбран'),
-    how: select('f-how', HOWS, item.how, 'Не выбрано'),
     series: select('f-series', SERIES, item.series, 'Без серии'),
     script: el('textarea', { id: 'f-script', placeholder: 'Опорные точки и примеры фраз. Не текст для заучивания.' })
   };
@@ -254,7 +239,7 @@ function itemSheet(item, opts = {}) {
   const save = () => {
     const title = f.title.value.trim();
     if (!title) { err.hidden = false; f.title.focus(); return; }
-    Object.assign(item, { title, date: f.date.value, kind: f.kind.value, format: f.format.value, how: f.how.value, series: f.series.value, script: f.script.value.trim() });
+    Object.assign(item, { title, date: f.date.value, kind: f.kind.value, format: f.format.value, series: f.series.value, script: f.script.value.trim() });
     if (isNew) S.items.push(item);
     if (opts.fromIdea) S.ideas = S.ideas.filter(i => i.id !== opts.fromIdea);
     if (item.date) S.open = item.id;
@@ -264,8 +249,7 @@ function itemSheet(item, opts = {}) {
     el('h2', null, isNew ? 'Новая тема в плане' : 'Правка темы'),
     field('f-title', 'Тема', f.title), err,
     el('div', { class: 'two' }, field('f-date', 'Когда', f.date), field('f-kind', 'Что это', f.kind)),
-    el('div', { class: 'two' }, field('f-format', 'Формат', f.format), field('f-how', 'Как снять', f.how)),
-    field('f-series', 'Серия', f.series),
+    el('div', { class: 'two' }, field('f-format', 'Формат', f.format), field('f-series', 'Серия', f.series)),
     field('f-script', 'Сценарий и заметки', f.script),
     el('div', { class: 'sheet-actions' },
       !isNew ? el('button', { class: 'btn danger', type: 'button', onclick: () => { closeSheet(); removeItem(item.id); } }, 'Удалить') : el('span'),
@@ -293,6 +277,26 @@ function ideaSheet(idea) {
       el('div', { class: 'grow' },
         el('button', { class: 'btn ghost', type: 'button', onclick: closeSheet }, 'Отмена'),
         el('button', { class: 'btn primary', type: 'button', onclick: save }, 'Сохранить')))
+  ]);
+}
+
+/* «Перенести»: только дата, быстро. */
+function dateSheet(item) {
+  const d = el('input', { type: 'date', id: 'd-date', value: item.date || '' });
+  const move = (val) => {
+    const old = item.date;
+    item.date = val; persist(); closeSheet(); render();
+    toast(val ? 'Перенесено на ' + shortDate(val) : 'Дата убрана', 'Отменить', () => { item.date = old; persist(); render(); });
+  };
+  openSheet([
+    el('h2', null, 'Перенести'),
+    el('p', { class: 'hint' }, item.title),
+    field('d-date', 'Новая дата', d),
+    el('div', { class: 'sheet-actions' },
+      el('button', { class: 'btn danger', type: 'button', onclick: () => move('') }, 'Убрать дату'),
+      el('div', { class: 'grow' },
+        el('button', { class: 'btn ghost', type: 'button', onclick: closeSheet }, 'Отмена'),
+        el('button', { class: 'btn primary', type: 'button', onclick: () => { if (d.value) move(d.value); else d.focus(); } }, 'Перенести')))
   ]);
 }
 
@@ -348,7 +352,7 @@ function rowEl(it, mode) {
         late && el('span', { class: 'late' }, 'дата прошла')),
       el('span', { class: 'title' }, it.title),
       el('span', { class: 'tags' },
-        el('span', { class: 'pill' }, it.kind),
+        it.kind === 'Пост' && el('span', { class: 'pill' }, 'Пост'),
         it.format && el('span', { class: 'pill' }, it.format),
         it.series && el('span', { class: 'pill series' }, it.series))),
     mode === 'plan' && el('span', { class: 'chev', 'aria-hidden': 'true' }, '▾'));
@@ -357,8 +361,7 @@ function rowEl(it, mode) {
     row.append(el('div', { class: 'row-body' },
       el('dl', { class: 'facts' },
         el('dt', null, 'Когда'), el('dd', null, it.date ? longDate(it.date) : 'дата не выбрана'),
-        el('dt', null, 'Формат'), el('dd', null, it.format || 'не выбран'),
-        el('dt', null, 'Как снять'), el('dd', null, it.how || 'не выбрано')),
+        el('dt', null, 'Формат'), el('dd', null, it.format || 'не выбран')),
       el('div', null,
         el('p', { class: 'script-label' }, 'Сценарий и заметки'),
         it.script
@@ -366,6 +369,7 @@ function rowEl(it, mode) {
           : el('p', { class: 'script empty' }, 'Сценария пока нет. Нажмите «Править» и впишите опорные точки.')),
       el('div', { class: 'actions' },
         el('button', { class: 'btn', type: 'button', onclick: () => itemSheet(it) }, 'Править'),
+        el('button', { class: 'btn', type: 'button', onclick: () => dateSheet(it) }, 'Перенести'),
         el('button', { class: 'btn', type: 'button', onclick: () => swapSheet(it) }, 'Заменить'),
         el('button', { class: 'btn danger', type: 'button', onclick: () => removeItem(it.id) }, 'Удалить'))));
   }
@@ -376,17 +380,15 @@ function viewPlan() {
   const out = [];
   const openItems = S.items.filter(i => !i.done).sort(byDate);
   const t = today();
-  const next = openItems.find(i => i.date && pd(i.date) >= t) || openItems[0];
   const total = S.items.length, done = S.items.filter(i => i.done).length;
   out.push(el('div', { class: 'head' },
     el('div', { class: 'head-top' }, el('h1', null, 'Контент-план'), el('span', { class: 'today' }, WD_LONG[t.getDay()] + ', ' + t.getDate() + ' ' + MON_LONG[t.getMonth()])),
-    next && el('p', { class: 'next' }, 'Ближайшее: ', el('b', null, next.title), next.date ? ', ' + shortDate(next.date) : ''),
     el('div', { class: 'meter' },
       el('div', { class: 'meter-row' }, el('span', null, 'Снято'), el('span', null, done + ' из ' + total)),
       el('div', { class: 'bar' }, el('i', { style: 'width:' + (total ? Math.round(done / total * 100) : 0) + '%' })))));
 
   if (!openItems.length) {
-    out.push(el('div', { class: 'empty-state' }, el('b', null, 'В плане пусто'), 'Нажмите + или возьмите тему из «Идей».'));
+    out.push(el('div', { class: 'empty-state' }, el('b', null, 'В плане пока пусто'), 'Нажмите + и впишите первую тему. Или начните с вкладки «Идеи».'));
     return out;
   }
   const groups = new Map();
@@ -403,6 +405,64 @@ function viewPlan() {
       el('h2', null, el('span', null, label), el('span', null, 'снято ' + arr.filter(i => i.done).length + ' из ' + arr.length)),
       el('div', { class: 'list' }, rest.map(i => rowEl(i, 'plan')))));
   }
+  return out;
+}
+
+const MON_NOM = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+function calRow(it) {
+  return el('article', { class: 'row' + (it.done ? ' done' : '') },
+    el('div', { class: 'row-head' },
+      el('button', { class: 'check', type: 'button', 'aria-pressed': String(it.done), 'aria-label': it.done ? 'Вернуть в план' : 'Отметить снятым', onclick: () => toggleDone(it.id) }, '✓'),
+      el('div', { class: 'row-main', style: 'gap:8px' },
+        el('span', { class: 'title' }, it.title),
+        el('span', { class: 'tags' },
+          it.kind === 'Пост' && el('span', { class: 'pill' }, 'Пост'),
+          it.format && el('span', { class: 'pill' }, it.format),
+          it.series && el('span', { class: 'pill series' }, it.series)),
+        el('div', { class: 'actions' },
+          el('button', { class: 'btn', type: 'button', onclick: () => dateSheet(it) }, 'Перенести'),
+          el('button', { class: 'btn', type: 'button', onclick: () => itemSheet(it) }, 'Править')))));
+}
+
+function viewCalendar() {
+  const t = today();
+  if (!S.cal) { S.cal = { y: t.getFullYear(), m: t.getMonth() }; S.day = iso(t); }
+  const { y, m } = S.cal;
+  const byDay = new Map();
+  for (const it of S.items) if (it.date) { if (!byDay.has(it.date)) byDay.set(it.date, []); byDay.get(it.date).push(it); }
+  const shift = n => { const d = new Date(y, m + n, 1); S.cal = { y: d.getFullYear(), m: d.getMonth() }; render(); };
+  const goToday = () => { S.cal = { y: t.getFullYear(), m: t.getMonth() }; S.day = iso(t); render(); };
+
+  const offset = (new Date(y, m, 1).getDay() + 6) % 7;
+  const rows = Math.ceil((offset + new Date(y, m + 1, 0).getDate()) / 7);
+  const cells = [];
+  for (const w of ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']) cells.push(el('div', { class: 'cal-wd' }, w));
+  for (let i = 0; i < rows * 7; i++) {
+    const d = new Date(y, m, 1 - offset + i), key = iso(d), list = byDay.get(key) || [];
+    cells.push(el('button', { type: 'button', class: 'cal-day' + (d.getMonth() !== m ? ' out' : '') + (key === iso(t) ? ' today' : ''), 'aria-pressed': String(S.day === key),
+        'aria-label': longDate(key) + (list.length ? ', тем: ' + list.length : ''), onclick: () => { S.day = key; render(); } },
+      el('span', { class: 'n' }, String(d.getDate())),
+      el('span', { class: 'dots' }, list.slice(0, 3).map(x => el('i', { class: x.done ? 'done' : '' })))));
+  }
+
+  const out = [
+    el('div', { class: 'cal-head' },
+      el('h1', null, MON_NOM[m] + ' ' + y),
+      el('div', { class: 'cal-nav' },
+        el('button', { type: 'button', 'aria-label': 'Прошлый месяц', onclick: () => shift(-1) }, '‹'),
+        el('button', { type: 'button', style: 'width:auto;padding:0 12px;font-size:13px', onclick: goToday }, 'Сегодня'),
+        el('button', { type: 'button', 'aria-label': 'Следующий месяц', onclick: () => shift(1) }, '›'))),
+    el('div', { class: 'cal' }, el('div', { class: 'cal-grid' }, cells))
+  ];
+  const dayItems = byDay.get(S.day) || [];
+  out.push(el('section', { class: 'week' },
+    el('h2', null, el('span', null, longDate(S.day)), el('button', { class: 'btn', type: 'button', style: 'text-transform:none;letter-spacing:0;font-family:var(--font)', onclick: () => itemSheet({ title: '', kind: 'Рилс', date: S.day, format: '', series: '', script: '', done: false, id: newId() }) }, '+ Добавить')),
+    dayItems.length
+      ? el('div', { class: 'list' }, dayItems.map(calRow))
+      : el('div', { class: 'empty-state' }, 'На этот день ничего не запланировано.')));
+  const undated = S.items.filter(i => !i.date && !i.done);
+  if (undated.length) out.push(el('section', { class: 'week' }, el('h2', null, el('span', null, 'Без даты'), el('span', null, String(undated.length))),
+    el('div', { class: 'list' }, undated.map(calRow))));
   return out;
 }
 
@@ -446,22 +506,22 @@ function viewDone() {
 
 let resetArmed = false;
 function footer() {
-  const b = el('button', { class: 'btn ghost', type: 'button' }, resetArmed ? 'Точно сбросить на пример?' : 'Сбросить на пример');
+  const b = el('button', { class: 'btn ghost', type: 'button' }, resetArmed ? 'Точно очистить всё?' : 'Очистить всё');
   b.addEventListener('click', () => {
     if (!resetArmed) { resetArmed = true; render(); setTimeout(() => { resetArmed = false; render(); }, 3500); return; }
     const s = seed(); S.items = s.items; S.ideas = s.ideas; S.open = null; resetArmed = false; persist(); render();
   });
   return el('div', { class: 'foot' },
-    el('p', { class: 'hint' }, 'Это прототип. Записи хранятся только в этом браузере. В боте они будут в базе и на всех ваших устройствах.'), b);
+    el('p', { class: 'hint' }, 'Прототип: записи хранятся только в этом браузере. В боте они будут в базе.'), b);
 }
 
 function render() {
   const app = document.getElementById('app');
-  const view = S.tab === 'plan' ? viewPlan() : S.tab === 'ideas' ? viewIdeas() : viewDone();
+  const view = S.tab === 'plan' ? viewPlan() : S.tab === 'cal' ? viewCalendar() : S.tab === 'ideas' ? viewIdeas() : viewDone();
   const keep = document.activeElement && document.activeElement.id === 'quick' ? document.activeElement.value : null;
   app.replaceChildren(...view, footer());
   if (keep) { const q = document.getElementById('quick'); if (q) q.value = keep; }
-  const tabs = [['plan', 'План', S.items.filter(i => !i.done).length], ['ideas', 'Идеи', S.ideas.length], ['done', 'Снято', S.items.filter(i => i.done).length]];
+  const tabs = [['plan', 'План', S.items.filter(i => !i.done).length], ['cal', 'Календарь', '\u00a0'], ['ideas', 'Идеи', S.ideas.length], ['done', 'Снято', S.items.filter(i => i.done).length]];
   document.getElementById('tabs').replaceChildren(...tabs.map(([k, name, n]) =>
     el('button', { type: 'button', role: 'tab', 'aria-selected': String(S.tab === k), onclick: () => { S.tab = k; render(); window.scrollTo(0, 0); } },
       el('b', null, name), el('span', { class: 'count' }, String(n)))));
@@ -470,7 +530,7 @@ function render() {
 
 document.getElementById('fab').addEventListener('click', () => {
   if (S.tab === 'ideas') ideaSheet({ title: '', note: '' });
-  else itemSheet({ title: '', kind: 'Рилс', date: '', format: '', how: '', series: '', script: '', done: false, id: newId() });
+  else itemSheet({ title: '', kind: 'Рилс', date: S.tab === 'cal' && S.day ? S.day : '', format: '', series: '', script: '', done: false, id: newId() });
 });
 render();
 </script>
